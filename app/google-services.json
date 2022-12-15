@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "161281003189",
+    "project_id": "dailykids-53ed3",
+    "storage_bucket": "dailykids-53ed3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161281003189:android:25579316cff84c962538fc",
+        "android_client_info": {
+          "package_name": "com.project.dailykids"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161281003189-k45h4kg73dpqk1o0rq0m4sesaieebrd6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXx1XCHSxUmEVBn6R-6N0dilwXajddjuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161281003189-k45h4kg73dpqk1o0rq0m4sesaieebrd6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
