@@ -221,7 +221,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid();
                     String simpleDTOKey = mRef.child("checkExist").push().getKey();
-                    String kinderName = "nowhere";
+                    String kinderName = "무소속";
                     UserDTO userDTO = new UserDTO(uid, userEmail, userNickname, userWho, kinderName, userPhone, simpleDTOKey);
                     SimpleUserDTO simpleUserDTO = new SimpleUserDTO(userEmail, userNickname);
                     mRef.child("checkExist").child(simpleDTOKey).setValue(simpleUserDTO);
