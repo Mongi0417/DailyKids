@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
 
         // 툴바 설정
-        mView = findViewById(R.id.toolbar_login);
+        mView = findViewById(R.id.login_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("로그인");
@@ -44,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         // 위젯 지정
         edtEmail = findViewById(R.id.login_edtEmail);
         edtPassword = findViewById(R.id.login_edtPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnRegister = findViewById(R.id.btnRegister);
-        btnTrial = findViewById(R.id.btnTrial);
+        btnLogin = findViewById(R.id.login_btnLogin);
+        btnRegister = findViewById(R.id.login_btnRegister);
+        btnTrial = findViewById(R.id.login_btnTrial);
         // 사용자 인증 리스너
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {

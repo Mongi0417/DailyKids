@@ -227,6 +227,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
                     mRef.child("checkExist").child(simpleDTOKey).setValue(simpleUserDTO);
                     mRef.child("users").child(uid).setValue(userDTO);
                     mStorageRef.child("profile_img/").child(uid + ".jpg").putFile(cropUri);
+                    tempFile.delete();
                     finishAffinity();
                     Intent intent = new Intent(RegisterStep3Activity.this, LoginActivity.class);
                     startActivity(intent);

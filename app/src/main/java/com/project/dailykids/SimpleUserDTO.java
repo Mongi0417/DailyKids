@@ -9,6 +9,9 @@ public class SimpleUserDTO {
         this.nickname = nickname;
     }
 
+    public SimpleUserDTO() {
+    }
+
     public String getEmail() {
         return email;
     }

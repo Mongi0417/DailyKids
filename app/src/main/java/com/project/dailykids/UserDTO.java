@@ -8,6 +8,11 @@ public class UserDTO {
     private String kinderName;
     private String phone;
     private String simpleDTOKey;
+    //private String[] profileKey;
+
+
+    public UserDTO() {
+    }
 
     public UserDTO(String uid, String email, String nickname, String who, String kinderName, String phone, String simpleDTOKey) {
         this.uid = uid;
