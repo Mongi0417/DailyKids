@@ -72,11 +72,11 @@ public class RegisterStep3Activity extends AppCompatActivity {
         userNickname = intent.getStringExtra("nickname");
         userWho = intent.getStringExtra("who");
         userPhone = intent.getStringExtra("phone");
-        Log.d("TAG", userEmail);
+        /*Log.d("TAG", userEmail);
         Log.d("TAG", userPassword);
         Log.d("TAG", userNickname);
         Log.d("TAG", userWho);
-        Log.d("TAG", userPhone);
+        Log.d("TAG", userPhone);*/
 
         // 파이어베이스 관련
         mAuth = FirebaseAuth.getInstance();
@@ -131,7 +131,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
         });
     }
 
-    private void takePhoto() {
+    public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             tempFile = createImageFile();
@@ -147,13 +147,13 @@ public class RegisterStep3Activity extends AppCompatActivity {
         }
     }
 
-    private void goToAlbum() {
+    public void goToAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
-    private File createImageFile() throws IOException {
+    public File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(new Date());
         String imageFileName = "IMG_" + timeStamp + "_";
         File storageDir = new File(getCacheDir() + "/img");
@@ -163,7 +163,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
         return image;
     }
 
-    private void cropImage(Uri photoUri) {
+    public void cropImage(Uri photoUri) {
         if (tempFile == null) {
             try {
                 tempFile = createImageFile();
@@ -178,7 +178,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
         Crop.of(photoUri, cropUri).asSquare().start(this);
     }
 
-    private void setImage() {
+    public void setImage() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
         imgProfile.setImageBitmap(originalBm);
@@ -214,17 +214,17 @@ public class RegisterStep3Activity extends AppCompatActivity {
         }
     }
 
-    private void createUser(String userEmail, String userPassword, String userNickname, String userWho, String userPhone, Uri cropUri) {
+    public void createUser(String userEmail, String userPassword, String userNickname, String userWho, String userPhone, Uri cropUri) {
         mAuth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String uid = task.getResult().getUser().getUid();
-                    String simpleDTOKey = mRef.child("checkExist").push().getKey();
+                    String simpleDTOKey = mRef.child("SimpleUserData").push().getKey();
                     String kinderName = "무소속";
                     UserDTO userDTO = new UserDTO(uid, userEmail, userNickname, userWho, kinderName, userPhone, simpleDTOKey);
                     SimpleUserDTO simpleUserDTO = new SimpleUserDTO(userEmail, userNickname);
-                    mRef.child("checkExist").child(simpleDTOKey).setValue(simpleUserDTO);
+                    mRef.child("SimpleUserData").child(simpleDTOKey).setValue(simpleUserDTO);
                     mRef.child("users").child(uid).setValue(userDTO);
                     mStorageRef.child("profile_img/").child(uid + ".jpg").putFile(cropUri);
                     tempFile.delete();
@@ -248,7 +248,7 @@ public class RegisterStep3Activity extends AppCompatActivity {
         });
     }
 
-    private void tedPermission() {
+    public void tedPermission() {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {

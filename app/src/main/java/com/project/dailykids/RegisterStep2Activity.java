@@ -67,7 +67,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
         edtCode = findViewById(R.id.register2_edtCode);
         btnRequest = findViewById(R.id.register2_btnRequest);
         btnNext = findViewById(R.id.register2_btnNext);
-        // 전화 인증 콜백 선언
+        // 전화 인증 콜백
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {

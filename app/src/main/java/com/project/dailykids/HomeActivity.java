@@ -27,10 +27,11 @@ import com.google.firebase.storage.StorageReference;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity {
+    private static final int SIZE_OF_NOTICE = 4;
     private View mView;
     private Toolbar toolbar;
-    private TextView tvToolbarTitle, tvKinderName, tvNickname, tvPreNotice[] = new TextView[4], tvnDate[] = new TextView[4];
-    private Integer noticeId[] = {R.id.tvNotice1, R.id.tvNotice2, R.id.tvNotice3, R.id.tvNotice4}, dateId[] = {R.id.tvNoticeDate1, R.id.tvNoticeDate2, R.id.tvNoticeDate3, R.id.tvNoticeDate4};
+    private TextView tvToolbarTitle, tvKinderName, tvNickname, tvPreNotice[] = new TextView[SIZE_OF_NOTICE], tvnDate[] = new TextView[SIZE_OF_NOTICE];
+    private int noticeId[] = {R.id.tvNotice1, R.id.tvNotice2, R.id.tvNotice3, R.id.tvNotice4}, dateId[] = {R.id.tvNoticeDate1, R.id.tvNoticeDate2, R.id.tvNoticeDate3, R.id.tvNoticeDate4};
     private CircleImageView imgProfile;
     private LinearLayout linearNotice, linearApply, linearBoard, linearShuttle;
     private FloatingActionButton fabChat;
@@ -58,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         // 위젯 연결
         tvKinderName = findViewById(R.id.home_tvKinderName);
         tvNickname = findViewById(R.id.home_tvNickname);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < SIZE_OF_NOTICE; i++) {
             tvPreNotice[i] = findViewById(noticeId[i]);
             tvnDate[i] = findViewById(dateId[i]);
         }

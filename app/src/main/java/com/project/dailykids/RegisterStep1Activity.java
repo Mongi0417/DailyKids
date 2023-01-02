@@ -35,7 +35,7 @@ public class RegisterStep1Activity extends AppCompatActivity {
     private RadioButton rdButton;
     private RadioGroup rdGroup;
     private Button btnCheckEmail, btnCheckNickname, btnNext;
-    private String userEmail, userPassword, userNickname, userWho;
+    private String userEmail, userPassword, userNickname;
     private boolean checkEmailExist = true, checkPasswordLength = false, checkSamePassword = false, checkNicknameLength = false, checkNicknameExist = true;
     private DatabaseReference mRef;
     private SimpleUserDTO simpleUserDTO;
@@ -239,11 +239,11 @@ public class RegisterStep1Activity extends AppCompatActivity {
         });
     }
 
-    private boolean checkNickname(boolean checkNicknameLength, boolean checkNicknameExist) {
+    public boolean checkNickname(boolean checkNicknameLength, boolean checkNicknameExist) {
         return checkNicknameLength && !checkNicknameExist;
     }
 
-    private boolean checkPassword(boolean checkPasswordLength, boolean checkSamePassword) {
+    public boolean checkPassword(boolean checkPasswordLength, boolean checkSamePassword) {
         return checkPasswordLength && checkSamePassword;
     }
 

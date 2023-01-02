@@ -3,6 +3,7 @@ package com.project.dailykids;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvToolbarTitle;
     private Toolbar toolbar;
     private EditText edtEmail, edtPassword;
-    private Button btnLogin, btnRegister, btnTrial;
+    private Button btnLogin, btnRegister;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private long waitTime = 0;
@@ -46,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.login_edtPassword);
         btnLogin = findViewById(R.id.login_btnLogin);
         btnRegister = findViewById(R.id.login_btnRegister);
-        btnTrial = findViewById(R.id.login_btnTrial);
         // 사용자 인증 리스너
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginUser(String id, String password) {
+    public void loginUser(String id, String password) {
         mAuth.signInWithEmailAndPassword(id, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(Task<AuthResult> task) {
@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
         if (System.currentTimeMillis() - waitTime >= 2000) {
             waitTime = System.currentTimeMillis();
             Toast toast = Toast.makeText(LoginActivity.this, "뒤로 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         } else {
             finish();
