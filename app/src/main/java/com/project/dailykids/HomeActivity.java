@@ -1,7 +1,9 @@
 package com.project.dailykids;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -26,7 +28,7 @@ import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int SIZE_OF_NOTICE = 4;
     private View mView;
     private Toolbar toolbar;
@@ -36,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     private LinearLayout linearNotice, linearApply, linearBoard, linearShuttle;
     private FloatingActionButton fabChat;
     private long waitTime = 0;
-    private String uid = "", nickName = "", kinderName = "", who = "";
+    private String uid = "", nickname = "", kinderName = "", who = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,12 @@ public class HomeActivity extends AppCompatActivity {
         linearBoard = findViewById(R.id.home_board);
         linearShuttle = findViewById(R.id.home_shuttle);
         fabChat = findViewById(R.id.home_fabChat);
+        // 리스너 연결
+        linearShuttle.setOnClickListener(this);
+        linearNotice.setOnClickListener(this);
+        linearBoard.setOnClickListener(this);
+        linearApply.setOnClickListener(this);
+        fabChat.setOnClickListener(this);
         // 데이터 불러오기 및 프로필 설정(유치원 이름, 닉네임, 프로필 사진)
         new Thread(() -> runOnUiThread(new Runnable() {
             @Override
@@ -83,11 +91,11 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserDTO userDTO = snapshot.getValue(UserDTO.class);
-                        nickName = userDTO.getNickname();
+                        nickname = userDTO.getNickname();
                         kinderName = userDTO.getKinderName();
                         who = userDTO.getWho();
                         tvKinderName.setText("한국유치원");
-                        tvNickname.setText(nickName);
+                        tvNickname.setText(nickname);
                     }
 
                     @Override
@@ -99,12 +107,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onClick(View view) {
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.home_fabChat:
+                intent = new Intent(HomeActivity.this, ChatActivity.class);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - waitTime >= 2000) {
             waitTime = System.currentTimeMillis();
-            Toast toast = Toast.makeText(HomeActivity.this, "뒤로 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+            Toast.makeText(HomeActivity.this, "뒤로 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
         } else {
             finish();
         }

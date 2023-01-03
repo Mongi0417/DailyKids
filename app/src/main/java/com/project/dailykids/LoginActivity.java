@@ -97,8 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (System.currentTimeMillis() - waitTime >= 2000) {
             waitTime = System.currentTimeMillis();
-            Toast toast = Toast.makeText(LoginActivity.this, "뒤로 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(LoginActivity.this, "뒤로 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
         } else {
             finish();
         }
