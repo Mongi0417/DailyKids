@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvToolbarTitle;
     private Toolbar toolbar;
     private EditText edtEmail, edtPassword;
-    private Button btnLogin, btnRegister;
+    private Button btnLogin, btnJoin, btnTrial;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private long waitTime = 0;
@@ -35,6 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
+        init();
+        clickLoginButton();
+        clickJoinButton();
+    }
+
+    private void init() {
         // 툴바 설정
         mView = findViewById(R.id.login_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
@@ -46,9 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.login_edtEmail);
         edtPassword = findViewById(R.id.login_edtPassword);
         btnLogin = findViewById(R.id.login_btnLogin);
-        btnRegister = findViewById(R.id.login_btnRegister);
+        btnJoin = findViewById(R.id.login_btnJoin);
+        btnTrial = findViewById(R.id.login_btnTrial);
         // 사용자 인증 리스너
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void setAuthListener() {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth mAuth) {
@@ -60,32 +70,35 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
+    }
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!TextUtils.isEmpty(edtEmail.getText().toString()) && !TextUtils.isEmpty(edtPassword.getText().toString())) { // NullPointerException 발생 위험성 있으므로 TextUtils 활용
-                    loginUser(edtEmail.getText().toString(), edtPassword.getText().toString());
-                } else {
-                    Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterStep1Activity.class);
-                startActivity(intent);
+    private void clickLoginButton() {
+        btnLogin.setOnClickListener(view -> {
+            if (!TextUtils.isEmpty(edtEmail.getText().toString()) && !TextUtils.isEmpty(edtPassword.getText().toString())) { // NullPointerException 발생 위험성 있으므로 TextUtils 활용
+                loginUser(edtEmail.getText().toString(), edtPassword.getText().toString());
+            } else {
+                Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void loginUser(String id, String password) {
+    private void clickJoinButton() {
+        btnJoin.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterStep1Activity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void clickTrialButton() {
+
+    }
+
+    private void loginUser(String id, String password) {
         mAuth.signInWithEmailAndPassword(id, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) { // 로그인 성공 시,
+                    setAuthListener();
                     mAuth.addAuthStateListener(mAuthListener);
                 } else// 로그인 실패 시,
                     Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();

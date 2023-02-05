@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/login_edtPassword"/>
 
     <android.widget.Button
-        android:id="@+id/login_btnRegister"
+        android:id="@+id/login_btnJoin"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
