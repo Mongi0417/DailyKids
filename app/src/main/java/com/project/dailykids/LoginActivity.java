@@ -35,12 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        init();
+        initData();
         clickLoginButton();
         clickJoinButton();
     }
 
-    private void init() {
+    private void initData() {
         // 툴바 설정
         mView = findViewById(R.id.login_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);

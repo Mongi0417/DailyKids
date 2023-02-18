@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,79 +45,8 @@ public class RegisterStep1Activity extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.none);
         setContentView(R.layout.register_step1_layout);
 
-        // 툴바 설정
-        mView = findViewById(R.id.register1_toolbar);
-        toolbar = mView.findViewById(R.id.toolbar);
-        tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
-        tvToolbarTitle.setText("회원가입");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // 위젯 지정
-        tvCheckEmail = findViewById(R.id.register1_tvCheckEmail);
-        tvPasswordLength = findViewById(R.id.register1_tvPasswordLength);
-        tvCheckPassword = findViewById(R.id.register1_tvCheckPassword);
-        tvCheckNickname = findViewById(R.id.register1_tvCheckNickname);
-        edtEmail = findViewById(R.id.register1_edtEmail);
-        edtPassword = findViewById(R.id.register1_edtPassword);
-        edtCheckPassword = findViewById(R.id.register1_edtCheckPassword);
-        edtNickname = findViewById(R.id.register1_edtNickname);
-        rdGroup = findViewById(R.id.register1_rdGroup);
-        btnCheckEmail = findViewById(R.id.register1_btnCheckEmail);
-        btnCheckNickname = findViewById(R.id.register1_btnCheckNickname);
-        btnNext = findViewById(R.id.register1_btnNext);
-        // 파이어베이스 관련
-        mRef = FirebaseDatabase.getInstance().getReference();
-
-        edtPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                userPassword = edtPassword.getText().toString();
-                if (userPassword.length() < 6) {
-                    tvPasswordLength.setVisibility(View.VISIBLE);
-                    checkPasswordLength = false;
-                } else {
-                    tvPasswordLength.setVisibility(View.GONE);
-                    checkPasswordLength = true;
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        edtCheckPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                tvCheckPassword.setVisibility(View.VISIBLE);
-                if (edtPassword.getText().toString().equals(edtCheckPassword.getText().toString())) {
-                    checkSamePassword = true;
-                    tvCheckPassword.setTextColor(Color.BLUE);
-                    tvCheckPassword.setText("비밀번호와 일치합니다.");
-                } else {
-                    checkSamePassword = false;
-                    tvCheckPassword.setTextColor(Color.RED);
-                    tvCheckPassword.setText("비밀번호와 일치하지 않습니다.");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        initData();
+        checkPassword();
 
         edtNickname.addTextChangedListener(new TextWatcher() {
             @Override
@@ -146,86 +74,80 @@ public class RegisterStep1Activity extends AppCompatActivity {
             }
         });
 
-        btnCheckEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
-                checkEmailExist = false;
-                userEmail = edtEmail.getText().toString();
-                mRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot item : snapshot.getChildren()) {
-                            simpleUserDTO = item.getValue(SimpleUserDTO.class);
-                            String strEmail = simpleUserDTO.getEmail();
-                            if (userEmail.equals(strEmail)) {
-                                checkEmailExist = true;
-                                break;
-                            }
+        btnCheckEmail.setOnClickListener(view -> {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
+            checkEmailExist = false;
+            userEmail = edtEmail.getText().toString();
+            mRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        simpleUserDTO = item.getValue(SimpleUserDTO.class);
+                        String strEmail = simpleUserDTO.getEmail();
+                        if (userEmail.equals(strEmail)) {
+                            checkEmailExist = true;
+                            break;
                         }
-                        if (!checkEmailExist) {
-                            tvCheckEmail.setTextColor(Color.BLUE);
-                            tvCheckEmail.setText("사용 가능한 메일입니다.");
-                            edtEmail.setTextColor(Color.GRAY);
-                            edtEmail.setFocusable(false);
-                        } else {
-                            tvCheckEmail.setTextColor(Color.RED);
-                            tvCheckEmail.setText("이미 존재하는 메일입니다.");
-                        }
-                        tvCheckEmail.setVisibility(View.VISIBLE);
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    if (!checkEmailExist) {
+                        tvCheckEmail.setTextColor(Color.BLUE);
+                        tvCheckEmail.setText("사용 가능한 메일입니다.");
+                        edtEmail.setTextColor(Color.GRAY);
+                        edtEmail.setFocusable(false);
+                    } else {
+                        tvCheckEmail.setTextColor(Color.RED);
+                        tvCheckEmail.setText("이미 존재하는 메일입니다.");
                     }
-                });
-            }
+                    tvCheckEmail.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         });
 
-        btnCheckNickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
-                checkNicknameExist = false;
-                mRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot item : snapshot.getChildren()) {
-                            simpleUserDTO = item.getValue(SimpleUserDTO.class);
-                            String strNickname = simpleUserDTO.getNickname();
-                            if (userNickname.equals(strNickname)) {
-                                checkNicknameExist = true;
-                                break;
-                            }
+        btnCheckNickname.setOnClickListener(view -> {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
+            checkNicknameExist = false;
+            mRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        simpleUserDTO = item.getValue(SimpleUserDTO.class);
+                        String strNickname = simpleUserDTO.getNickname();
+                        if (userNickname.equals(strNickname)) {
+                            checkNicknameExist = true;
+                            break;
                         }
-                        if (!checkNicknameExist) {
-                            tvCheckNickname.setTextColor(Color.BLUE);
-                            tvCheckNickname.setText("사용 가능한 별명입니다.");
-                            edtNickname.setTextColor(Color.GRAY);
-                            edtNickname.setFocusable(false);
-                        } else {
-                            tvCheckNickname.setTextColor(Color.RED);
-                            tvCheckNickname.setText("이미 존재하는 별명입니다.");
-                        }
-                        tvCheckNickname.setVisibility(View.VISIBLE);
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    if (!checkNicknameExist) {
+                        tvCheckNickname.setTextColor(Color.BLUE);
+                        tvCheckNickname.setText("사용 가능한 별명입니다.");
+                        edtNickname.setTextColor(Color.GRAY);
+                        edtNickname.setFocusable(false);
+                    } else {
+                        tvCheckNickname.setTextColor(Color.RED);
+                        tvCheckNickname.setText("이미 존재하는 별명입니다.");
                     }
-                });
-            }
+                    tvCheckNickname.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rdButton = findViewById(rdGroup.getCheckedRadioButtonId());
-                if (!checkEmailExist && checkPassword(checkPasswordLength, checkSamePassword) && checkNickname(checkNicknameLength, checkNicknameExist) && (rdButton != null)) {
+                if (!checkEmailExist && canUsePassword(checkPasswordLength, checkSamePassword) && canUseNickname(checkNicknameLength, checkNicknameExist) && (rdButton != null)) {
                     Intent intent = new Intent(RegisterStep1Activity.this, RegisterStep2Activity.class);
                     intent.putExtra("email", userEmail);
                     intent.putExtra("password", userPassword);
@@ -239,11 +161,129 @@ public class RegisterStep1Activity extends AppCompatActivity {
         });
     }
 
-    public boolean checkNickname(boolean checkNicknameLength, boolean checkNicknameExist) {
+    private void initData() {
+        // 툴바 설정
+        mView = findViewById(R.id.register1_toolbar);
+        toolbar = mView.findViewById(R.id.toolbar);
+        tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
+        tvToolbarTitle.setText("회원가입");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        // 위젯 지정
+        tvCheckEmail = findViewById(R.id.register1_tvCheckEmail);
+        tvPasswordLength = findViewById(R.id.register1_tvPasswordLength);
+        tvCheckPassword = findViewById(R.id.register1_tvCheckPassword);
+        tvCheckNickname = findViewById(R.id.register1_tvCheckNickname);
+        edtEmail = findViewById(R.id.register1_edtEmail);
+        edtPassword = findViewById(R.id.register1_edtPassword);
+        edtCheckPassword = findViewById(R.id.register1_edtCheckPassword);
+        edtNickname = findViewById(R.id.register1_edtNickname);
+        rdGroup = findViewById(R.id.register1_rdGroup);
+        btnCheckEmail = findViewById(R.id.register1_btnCheckEmail);
+        btnCheckNickname = findViewById(R.id.register1_btnCheckNickname);
+        btnNext = findViewById(R.id.register1_btnNext);
+        // 파이어베이스 관련
+        mRef = FirebaseDatabase.getInstance().getReference();
+    }
+
+    private void clickCheckEmailButton() {
+        checkEmailExist = false;
+        userEmail = edtEmail.getText().toString();
+        mRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void checkPassword() {
+        edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                userPassword = edtPassword.getText().toString();
+                if (userPassword.length() < 6) {
+                    tvPasswordLength.setVisibility(View.VISIBLE);
+                    checkPasswordLength = false;
+                } else {
+                    tvPasswordLength.setVisibility(View.GONE);
+                    checkPasswordLength = true;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        edtCheckPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tvCheckPassword.setVisibility(View.VISIBLE);
+                if (edtPassword.getText().toString().equals(edtCheckPassword.getText().toString())) {
+                    checkSamePassword = true;
+                    tvCheckPassword.setTextColor(Color.BLUE);
+                    tvCheckPassword.setText("비밀번호와 일치합니다.");
+                } else {
+                    checkSamePassword = false;
+                    tvCheckPassword.setTextColor(Color.RED);
+                    tvCheckPassword.setText("비밀번호와 일치하지 않습니다.");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+    }
+
+    private void findNickname() {
+        mRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    simpleUserDTO = item.getValue(SimpleUserDTO.class);
+                    String strNickname = simpleUserDTO.getNickname();
+                    if (userNickname.equals(strNickname)) {
+                        checkNicknameExist = true;
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    private void clickCheckNicknameButton() {
+        btnCheckNickname.setOnClickListener(view -> {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
+            findNickname();
+        });
+    }
+
+    private boolean canUseNickname(boolean checkNicknameLength, boolean checkNicknameExist) {
         return checkNicknameLength && !checkNicknameExist;
     }
 
-    public boolean checkPassword(boolean checkPasswordLength, boolean checkSamePassword) {
+    private boolean canUsePassword(boolean checkPasswordLength, boolean checkSamePassword) {
         return checkPasswordLength && checkSamePassword;
     }
 
