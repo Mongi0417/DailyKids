@@ -3,8 +3,6 @@ package com.project.dailykids;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
 
         initData();
-        clickLoginButton();
-        clickJoinButton();
+        setLoginButton();
+        setJoinButton();
     }
 
     private void initData() {
@@ -72,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         };
     }
 
-    private void clickLoginButton() {
+    private void setLoginButton() {
         btnLogin.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(edtEmail.getText().toString()) && !TextUtils.isEmpty(edtPassword.getText().toString())) { // NullPointerException 발생 위험성 있으므로 TextUtils 활용
                 loginUser(edtEmail.getText().toString(), edtPassword.getText().toString());
@@ -82,15 +80,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void clickJoinButton() {
+    private void setJoinButton() {
         btnJoin.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterStep1Activity.class);
+            Intent intent = new Intent(LoginActivity.this, Join1Activity.class);
             startActivity(intent);
         });
-    }
-
-    private void clickTrialButton() {
-
     }
 
     private void loginUser(String id, String password) {
