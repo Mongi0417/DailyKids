@@ -3,6 +3,9 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.project.dailykids'
     compileSdk 32
@@ -15,6 +18,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "NAVER_API_KEY", properties['naver_api_key']
+        buildConfigField "String", "NAVER_API_KEY_ID", properties['naver_api_key_id']
+        buildConfigField "String", "KINDER_API_KEY", properties['kinder_api_key']
+
+        manifestPlaceholders = [NAVER_API_KEY_ID: "naver_api_key_id"]
     }
 
     buildTypes {

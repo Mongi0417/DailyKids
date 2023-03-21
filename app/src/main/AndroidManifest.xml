@@ -44,15 +44,15 @@
             android:name=".HomeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".RegisterStep1Activity"
+            android:name=".Join1Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
-            android:name=".RegisterStep2Activity"
+            android:name=".Join2Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
-            android:name=".RegisterStep3Activity"
+            android:name=".Join3Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
@@ -61,7 +61,7 @@
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="bhhcmc9l4t"/>
+            android:value="${NAVER_API_KEY_ID}"/>
     </application>
 
 </manifest>

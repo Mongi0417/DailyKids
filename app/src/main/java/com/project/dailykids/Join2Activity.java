@@ -28,7 +28,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public class RegisterStep2Activity extends AppCompatActivity {
+public class Join2Activity extends AppCompatActivity {
     private View mView;
     private Toolbar toolbar;
     private TextView tvToolbarTitle;
@@ -44,7 +44,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.none);
-        setContentView(R.layout.register_step2_layout);
+        setContentView(R.layout.join_step2_layout);
 
         // 파이어베이스 관련
         mAuth = FirebaseAuth.getInstance();
@@ -55,7 +55,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
         userNickname = intent.getStringExtra("nickname");
         userWho = intent.getStringExtra("who");
         // 툴바 설정
-        mView = findViewById(R.id.register2_toolbar);
+        mView = findViewById(R.id.join2_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("회원가입");
@@ -63,10 +63,10 @@ public class RegisterStep2Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // 위젯 지정
-        edtPhone = findViewById(R.id.register2_edtPhone);
-        edtCode = findViewById(R.id.register2_edtCode);
-        btnRequest = findViewById(R.id.register2_btnRequest);
-        btnNext = findViewById(R.id.register2_btnNext);
+        edtPhone = findViewById(R.id.join2_edtPhone);
+        edtCode = findViewById(R.id.join2_edtCode);
+        btnRequest = findViewById(R.id.join2_btnRequest);
+        btnNext = findViewById(R.id.join2_btnNext);
         // 전화 인증 콜백
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
@@ -97,7 +97,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
                 if (userPhone.length() == 11) {
                     sendVerificationCode("+82" + userPhone.substring(1));
                 } else
-                    Toast.makeText(RegisterStep2Activity.this, "전화번호를 확인해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Join2Activity.this, "전화번호를 확인해 주세요.", Toast.LENGTH_SHORT).show();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
             }
@@ -107,7 +107,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (authOk) {
-                    Intent intent = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
+                    Intent intent = new Intent(Join2Activity.this, Join3Activity.class);
                     intent.putExtra("email", userEmail);
                     intent.putExtra("password", userPassword);
                     intent.putExtra("nickname", userNickname);
@@ -115,7 +115,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
                     intent.putExtra("phone", "01050120682");
                     startActivity(intent);
                 } else {
-                    Toast.makeText(RegisterStep2Activity.this, "전화번호 인증을 완료해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Join2Activity.this, "전화번호 인증을 완료해 주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

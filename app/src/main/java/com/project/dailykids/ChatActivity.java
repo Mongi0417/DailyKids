@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.project.dailykids.ChatAdapter;
+import com.project.dailykids.R;
+import com.project.dailykids.ChatDTO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

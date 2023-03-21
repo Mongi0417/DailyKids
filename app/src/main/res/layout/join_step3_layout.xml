@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/register3_toolbar"
+        android:id="@+id/join3_toolbar"
         layout="@layout/toolbar"/>
 
     <ImageView
@@ -24,7 +24,7 @@
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/register3_imgProfile"
+            android:id="@+id/join3_imgProfile"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:civ_border_color="@color/yellow"
@@ -34,7 +34,7 @@
             android:maxWidth="100dp"/>
 
         <android.widget.Button
-            android:id="@+id/register3_btnUploadImg"
+            android:id="@+id/join3_btnUploadImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -42,7 +42,7 @@
             android:background="@drawable/btn_yellow"/>
 
         <android.widget.Button
-            android:id="@+id/register3_btnRegister"
+            android:id="@+id/join3_btnJoin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
