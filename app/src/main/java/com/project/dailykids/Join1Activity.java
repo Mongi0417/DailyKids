@@ -40,7 +40,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
     private boolean isEmailAddressFormat, isAvailableEmailAddress, isLongPassword, isSamePassword, isAppropriateLengthForNickname, isAvailableNickname;
     private DatabaseReference mDbRef;
     private SimpleUserDTO simpleUserDTO;
-    private String userEmail, userPassword, userPasswordForCheck, userNickname;
+    private String userEmail = "", userPassword = "", userPasswordForCheck = "", userNickname = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

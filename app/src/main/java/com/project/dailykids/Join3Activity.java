@@ -4,18 +4,27 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,9 +32,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,7 +49,7 @@ public class Join3Activity extends AppCompatActivity {
     private View mView;
     private Toolbar toolbar;
     private TextView tvToolbarTitle;
-    private String userEmail, userPassword, userNickname, userWho;
+    private String userEmail = "", userPassword = "", userNickname = "", userWho = "";
     private CircleImageView imgProfile;
     private Button btnLoadImg, btnJoin;
     private Uri photoUri, cropUri;
@@ -50,6 +64,10 @@ public class Join3Activity extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.none);
         setContentView(R.layout.join_step3_layout);
 
+        setToolbar();
+        initData();
+        setButtonToLoadImage();
+        setButtonToJoin();
     }
 
     private void setToolbar() {
@@ -93,15 +111,112 @@ public class Join3Activity extends AppCompatActivity {
     }
 
     private void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            tempFile = createImageFile();
+        } catch (Exception e) {
+            Toast.makeText(this, "이미지 처리 오류, 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
+            finish();
+            e.printStackTrace();
+        }
+        if (tempFile != null) {
+            photoUri = FileProvider.getUriForFile(this, "{com.project.dailykids}.fileprovider", tempFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(intent, PICK_FROM_CAMERA);
+        }
+    }
 
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = new File(getCacheDir() + "/img");
+        if (!storageDir.exists())
+            storageDir.mkdir();
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        return image;
     }
 
     private void goToAlbum() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK) {
+            if (tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        tempFile = null;
+                    }
+                }
+            }
+            return;
+        }
+
+        switch (requestCode) {
+            case PICK_FROM_CAMERA:
+                photoUri = Uri.fromFile(tempFile);
+                cropImage(photoUri);
+                break;
+            case PICK_FROM_ALBUM:
+                photoUri = data.getData();
+                cropImage(photoUri);
+                break;
+            case Crop.REQUEST_CROP:
+                setImage();
+                break;
+        }
+    }
+
+    private void cropImage(Uri photoUri) {
+        if (tempFile == null) {
+            try {
+                tempFile = createImageFile();
+            } catch (IOException e) {
+                Toast.makeText(this, "이미지 처리 오류, 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
+                finish();
+                e.printStackTrace();
+            }
+        }
+
+        cropUri = Uri.fromFile(tempFile);
+        Crop.of(photoUri, cropUri).asSquare().start(this);
+    }
+
+    private void setImage() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+        imgProfile.setImageBitmap(originalBm);
     }
 
     private void createUser(String email, String password, String nickname, String who, Uri cropUri) {
-
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String uid = task.getResult().getUser().getUid();
+                String simpleDTOKey = mRef.child("SimpleUserData").push().getKey();
+                String kinderName = "무소속";
+                UserDTO userDTO = new UserDTO(uid, email, nickname, who, kinderName, simpleDTOKey);
+                SimpleUserDTO simpleUserDTO = new SimpleUserDTO(email, nickname);
+                mRef.child("SimpleUserData").child(simpleDTOKey).setValue(simpleUserDTO);
+                mRef.child("UserData").child(uid).setValue(userDTO);
+                mStorageRef.child("profile_img/").child(uid + ".jpg").putFile(cropUri);
+                tempFile.delete();
+                finishAffinity();
+                Intent intent = new Intent(Join3Activity.this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+                try {
+                    throw task.getException();
+                } catch (Exception e) {
+                    Toast.makeText(this, "계정을 다시 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }).addOnFailureListener(e -> e.printStackTrace());
     }
 
     private void tedPermission() {

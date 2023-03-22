@@ -35,8 +35,8 @@ public class Join2Activity extends AppCompatActivity {
     private EditText edtPhone, edtCode;
     private Button btnRequest, btnNext;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private String userEmail, userPassword, userNickname, userWho, userPhone;
-    private String verificationId;
+    private String userEmail = "", userPassword = "", userNickname = "", userWho = "", userPhone = "";
+    private String verificationId = "";
     private FirebaseAuth mAuth;
     private boolean authOk = true;
 

@@ -6,7 +6,7 @@ public class UserDTO {
     private String nickname;
     private String who;
     private String kinderName;
-    private String phone;
+    //private String phone;
     private String simpleDTOKey;
     //private String[] profileKey;
 
@@ -14,13 +14,12 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String uid, String email, String nickname, String who, String kinderName, String phone, String simpleDTOKey) {
+    public UserDTO(String uid, String email, String nickname, String who, String kinderName, String simpleDTOKey) {
         this.uid = uid;
         this.email = email;
         this.nickname = nickname;
         this.who = who;
         this.kinderName = kinderName;
-        this.phone = phone;
         this.simpleDTOKey = simpleDTOKey;
     }
 
@@ -42,10 +41,6 @@ public class UserDTO {
 
     public String getKinderName() {
         return kinderName;
-    }
-
-    public String getPhone() {
-        return phone;
     }
 
     public String getSimpleDTOKey() {

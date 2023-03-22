@@ -32,6 +32,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private TextView tvToolbarTitle, tvKinderName, tvNickname, tvPreNotice[] = new TextView[SIZE_OF_NOTICE], tvnDate[] = new TextView[SIZE_OF_NOTICE];
     private int noticeId[] = {R.id.tvNotice1, R.id.tvNotice2, R.id.tvNotice3, R.id.tvNotice4}, dateId[] = {R.id.tvNoticeDate1, R.id.tvNoticeDate2, R.id.tvNoticeDate3, R.id.tvNoticeDate4};
+    private DatabaseReference mDbRef;
+    private StorageReference mStorageRef;
     private CircleImageView imgProfile;
     private LinearLayout linearNotice, linearApply, linearBoard, linearShuttle;
     private FloatingActionButton fabChat;
@@ -44,7 +46,37 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         overridePendingTransition(R.anim.fadein, R.anim.none);
         setContentView(R.layout.home_layout);
 
-        // 툴바 설정
+        setToolbar();
+        initData();
+        setClickListener();
+
+        // 데이터 불러오기 및 프로필 설정(유치원 이름, 닉네임, 프로필 사진)
+        new Thread(() -> runOnUiThread(() -> {
+            mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    GlideApp.with(HomeActivity.this).load(task.getResult()).into(imgProfile);
+                }
+            });
+            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserDTO userDTO = snapshot.getValue(UserDTO.class);
+                    nickname = userDTO.getNickname();
+                    kinderName = userDTO.getKinderName();
+                    who = userDTO.getWho();
+                    tvKinderName.setText(kinderName);
+                    tvNickname.setText(nickname);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        })).start();
+    }
+
+    private void setToolbar() {
         mView = findViewById(R.id.home_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
@@ -52,10 +84,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // 파이어베이스 관련
+    }
+
+    private void initData() {
         uid = FirebaseAuth.getInstance().getUid();
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
-        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+        mDbRef = FirebaseDatabase.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         // 위젯 연결
         tvKinderName = findViewById(R.id.home_tvKinderName);
         tvNickname = findViewById(R.id.home_tvNickname);
@@ -69,39 +103,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         linearBoard = findViewById(R.id.home_board);
         linearShuttle = findViewById(R.id.home_shuttle);
         fabChat = findViewById(R.id.home_fabChat);
-        // 리스너 연결
+    }
+
+    private void setClickListener() {
         linearShuttle.setOnClickListener(this);
         linearNotice.setOnClickListener(this);
         linearBoard.setOnClickListener(this);
         linearApply.setOnClickListener(this);
         fabChat.setOnClickListener(this);
-        // 데이터 불러오기 및 프로필 설정(유치원 이름, 닉네임, 프로필 사진)
-        new Thread(() -> runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        GlideApp.with(HomeActivity.this).load(task.getResult()).into(imgProfile);
-                    }
-                });
-                mRef.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        UserDTO userDTO = snapshot.getValue(UserDTO.class);
-                        nickname = userDTO.getNickname();
-                        kinderName = userDTO.getKinderName();
-                        who = userDTO.getWho();
-                        tvKinderName.setText("한국유치원");
-                        tvNickname.setText(nickname);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-            }
-        })).start();
     }
 
     @Override
