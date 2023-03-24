@@ -72,7 +72,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    private void initData() {
+    private void initView() {
         tvCheckEmail = findViewById(R.id.join1_tvCheckEmail);
         tvPasswordLength = findViewById(R.id.join1_tvPasswordLength);
         tvCheckPassword = findViewById(R.id.join1_tvCheckPassword);
@@ -85,6 +85,9 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
         btnCheckNickname = findViewById(R.id.join1_btnCheckNickname);
         btnNext = findViewById(R.id.join1_btnNext);
         rdGroup = findViewById(R.id.join1_rdGroup);
+    }
+
+    private void initData() {
         mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -211,6 +214,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
     }
 
     private void checkDuplicatedNickname() {
+        isAvailableNickname = true;
         mDbRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -218,11 +222,11 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
                     simpleUserDTO = item.getValue(SimpleUserDTO.class);
                     String strNickname = simpleUserDTO.getNickname();
                     if (userNickname.equals(strNickname)) {
-                        isAvailableNickname = true;
+                        isAvailableNickname = false;
                         break;
                     }
                 }
-                if (isAvailableNickname) {
+                if (!isAvailableNickname) {
                     tvCheckNickname.setTextColor(Color.RED);
                     tvCheckNickname.setText("이미 존재하는 닉네임입니다.");
                 } else {
@@ -270,6 +274,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.join1_btnCheckNickname:
                 hideKeyboard();
+                checkNicknameLength();
                 if (isAppropriateLengthForNickname)
                     checkDuplicatedNickname();
                 break;

@@ -65,6 +65,7 @@ public class Join3Activity extends AppCompatActivity {
         setContentView(R.layout.join_step3_layout);
 
         setToolbar();
+        initView();
         initData();
         setButtonToLoadImage();
         setButtonToJoin();
@@ -80,15 +81,18 @@ public class Join3Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
+    private void initView() {
+        imgProfile = findViewById(R.id.join3_imgProfile);
+        btnLoadImg = findViewById(R.id.join3_btnUploadImg);
+        btnJoin = findViewById(R.id.join3_btnJoin);
+    }
+
     private void initData() {
         Intent intent = getIntent();
         userEmail = intent.getStringExtra("email");
         userPassword = intent.getStringExtra("password");
         userNickname = intent.getStringExtra("nickname");
         userWho = intent.getStringExtra("who");
-        imgProfile = findViewById(R.id.join3_imgProfile);
-        btnLoadImg = findViewById(R.id.join3_btnUploadImg);
-        btnJoin = findViewById(R.id.join3_btnJoin);
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();

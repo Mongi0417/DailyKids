@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.home_layout);
 
         setToolbar();
+        initView();
         initData();
         setClickListener();
 
@@ -86,11 +87,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    private void initData() {
-        uid = FirebaseAuth.getInstance().getUid();
-        mDbRef = FirebaseDatabase.getInstance().getReference();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        // 위젯 연결
+    private void initView() {
         tvKinderName = findViewById(R.id.home_tvKinderName);
         tvNickname = findViewById(R.id.home_tvNickname);
         for (int i = 0; i < SIZE_OF_NOTICE; i++) {
@@ -103,6 +100,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         linearBoard = findViewById(R.id.home_board);
         linearShuttle = findViewById(R.id.home_shuttle);
         fabChat = findViewById(R.id.home_fabChat);
+    }
+
+    private void initData() {
+        uid = FirebaseAuth.getInstance().getUid();
+        mDbRef = FirebaseDatabase.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
     private void setClickListener() {

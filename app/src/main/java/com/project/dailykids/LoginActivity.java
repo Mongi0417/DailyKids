@@ -33,26 +33,31 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
+        setToolbar();
+        initView();
         initData();
         setLoginButton();
         setJoinButton();
     }
 
-    private void initData() {
-        // 툴바 설정
+    private void setToolbar() {
         mView = findViewById(R.id.login_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("로그인");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // 위젯 지정
+    }
+
+    private void initView() {
         edtEmail = findViewById(R.id.login_edtEmail);
         edtPassword = findViewById(R.id.login_edtPassword);
         btnLogin = findViewById(R.id.login_btnLogin);
         btnJoin = findViewById(R.id.login_btnJoin);
         btnTrial = findViewById(R.id.login_btnTrial);
-        // 사용자 인증 리스너
+    }
+
+    private void initData() {
         mAuth = FirebaseAuth.getInstance();
     }
 

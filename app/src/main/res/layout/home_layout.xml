@@ -23,9 +23,8 @@
             android:id="@+id/home_imgProfile"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_person_24"
             app:civ_border_color="@color/yellow"
-            app:civ_border_width="1dp"
+            app:civ_border_width="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.4"/>
@@ -82,7 +81,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="알림장"
             android:textColor="@color/brown"
@@ -159,7 +157,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="입학신청"
             android:textColor="@color/brown"
