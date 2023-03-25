@@ -52,7 +52,7 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.none);
-        setContentView(R.layout.search_kinder);
+        setContentView(R.layout.search_kinder_layout);
 
         setToolbar();
         initView();
