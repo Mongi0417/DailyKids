@@ -55,6 +55,9 @@
             android:name=".ChatActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity
+            android:name=".SearchKinderActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
         <meta-data

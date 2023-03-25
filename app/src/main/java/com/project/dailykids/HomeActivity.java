@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference mDbRef;
     private StorageReference mStorageRef;
     private CircleImageView imgProfile;
-    private LinearLayout linearNotice, linearApply, linearBoard, linearShuttle;
+    private LinearLayout linearNotice, linearSearch, linearBoard, linearShuttle;
     private FloatingActionButton fabChat;
     private long waitTime = 0;
     private String uid = "", nickname = "", kinderName = "", who = "";
@@ -96,7 +96,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
         imgProfile = findViewById(R.id.home_imgProfile);
         linearNotice = findViewById(R.id.home_notice);
-        linearApply = findViewById(R.id.home_apply);
+        linearSearch = findViewById(R.id.home_search);
         linearBoard = findViewById(R.id.home_board);
         linearShuttle = findViewById(R.id.home_shuttle);
         fabChat = findViewById(R.id.home_fabChat);
@@ -112,7 +112,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         linearShuttle.setOnClickListener(this);
         linearNotice.setOnClickListener(this);
         linearBoard.setOnClickListener(this);
-        linearApply.setOnClickListener(this);
+        linearSearch.setOnClickListener(this);
         fabChat.setOnClickListener(this);
     }
 
@@ -125,6 +125,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
                 break;
+            case R.id.home_search:
+                intent = new Intent(HomeActivity.this, SearchKinderActivity.class);
+                intent.putExtra("nickname", nickname);
+                intent.putExtra("who", who);
+                startActivity(intent);
         }
     }
 
