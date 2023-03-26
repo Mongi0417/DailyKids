@@ -87,21 +87,6 @@ public class NoticeActivity extends AppCompatActivity {
     }
 
     private void loadNotice() {
-        /*mDbRef.child("notices").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mList.clear();
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    noticeDTO = item.getValue(NoticeDTO.class);
-                    mList.add(noticeDTO);
-                }
-                noticeAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });*/
         mDbRef.child("notices").orderByChild("timestamp").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

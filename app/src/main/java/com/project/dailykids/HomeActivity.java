@@ -137,6 +137,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("who", who);
                 startActivity(intent);
                 break;
+            case R.id.home_shuttle:
+                intent = new Intent(this, ShuttleActivity.class);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+                break;
         }
     }
 

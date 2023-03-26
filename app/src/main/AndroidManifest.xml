@@ -60,6 +60,8 @@
         <activity
             android:name=".NoticeWriteActivity"/>
         <activity
+            android:name=".ShuttleActivity"/>
+        <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
         <meta-data
