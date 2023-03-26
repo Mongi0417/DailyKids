@@ -2,6 +2,7 @@ package com.project.dailykids;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,14 +20,29 @@ public class SearchKinderAdapter extends RecyclerView.Adapter<SearchKinderAdapte
     private GetJsonObject mCallback;
     private String uid = "", who = "", nickname = "";
 
+    public SearchKinderAdapter(ArrayList<SearchKinderDTO> mData, Context context, GetJsonObject mCallback, String uid, String who, String nickname) {
+        this.mData = mData;
+        this.context = context;
+        this.mCallback = mCallback;
+        this.uid = uid;
+        this.who = who;
+        this.nickname = nickname;
+    }
+
     @Override
     public SearchKinderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_kinder_item, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchKinderAdapter.ViewHolder holder, int position) {
+        SearchKinderDTO item = mData.get(position);
 
+        holder.tvKinderName.setText(item.getKinderName());
+        holder.tvKinderAddress.setText(item.getKinderAddress());
+        holder.tvKinderTel.setText(item.getKinderTel());
     }
 
     @Override

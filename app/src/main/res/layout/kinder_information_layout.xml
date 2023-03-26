@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/information_toolbar"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/information_content_bg"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="유치원: "
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/information_tvKinderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="한국 유치원(공립)"
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/information_content_bg"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주소: "
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/information_tvKinderAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서울 강동구 둔촌동"
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/information_content_bg"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락처: "
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/information_tvKinderTel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="010-1234-5678"
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/information_content_bg"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="학급 수(만): "
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/information_tvKinderClCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3세반 3개 | 4세반 3개 | 5세반 3개\n혼합반 2개"
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/information_content_bg"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모집 인원: "
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/information_tvKinderFpCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3세반 20명 | 4세반 33명 | 5세반 12명\n혼합반 20명"
+            android:textColor="@color/brown"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/information_map_fragment"
+        android:name="com.naver.maps.map.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="7"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/information_btnApply"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="원서 접수"/>
+    </LinearLayout>
+</LinearLayout>

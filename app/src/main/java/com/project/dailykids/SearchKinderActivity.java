@@ -3,12 +3,14 @@ package com.project.dailykids;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,8 +22,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class SearchKinderActivity extends AppCompatActivity implements GetJsonObject, View.OnClickListener {
@@ -111,87 +118,87 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
                 case 0:
                     arraySgg = getResources().getStringArray(R.array.array_seoul);
                     arraySggCode = getResources().getStringArray(R.array.array_seoul_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 1:
                     arraySgg = getResources().getStringArray(R.array.array_busan);
                     arraySggCode = getResources().getStringArray(R.array.array_busan_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 2:
                     arraySgg = getResources().getStringArray(R.array.array_daegu);
                     arraySggCode = getResources().getStringArray(R.array.array_daegu_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 3:
                     arraySgg = getResources().getStringArray(R.array.array_incheon);
                     arraySggCode = getResources().getStringArray(R.array.array_incheon_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 4:
                     arraySgg = getResources().getStringArray(R.array.array_gwangju);
                     arraySggCode = getResources().getStringArray(R.array.array_gwangju_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 5:
                     arraySgg = getResources().getStringArray(R.array.array_daejeon);
                     arraySggCode = getResources().getStringArray(R.array.array_daejeon_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 6:
                     arraySgg = getResources().getStringArray(R.array.array_ulsan);
                     arraySggCode = getResources().getStringArray(R.array.array_ulsan_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 7:
                     arraySgg = getResources().getStringArray(R.array.array_sejong);
                     arraySggCode = getResources().getStringArray(R.array.array_sejong_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 8:
                     arraySgg = getResources().getStringArray(R.array.array_gyeonggi);
                     arraySggCode = getResources().getStringArray(R.array.array_gyeonggi_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 9:
                     arraySgg = getResources().getStringArray(R.array.array_gangwon);
                     arraySggCode = getResources().getStringArray(R.array.array_gangwon_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 10:
                     arraySgg = getResources().getStringArray(R.array.array_chungbuk);
                     arraySggCode = getResources().getStringArray(R.array.array_chungbuk_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 11:
                     arraySgg = getResources().getStringArray(R.array.array_chungnam);
                     arraySggCode = getResources().getStringArray(R.array.array_chungnam_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 12:
                     arraySgg = getResources().getStringArray(R.array.array_jeonbuk);
                     arraySggCode = getResources().getStringArray(R.array.array_jeonbuk_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 13:
                     arraySgg = getResources().getStringArray(R.array.array_jeonnam);
                     arraySggCode = getResources().getStringArray(R.array.array_jeonnam_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 14:
                     arraySgg = getResources().getStringArray(R.array.array_gyeongbuk);
                     arraySggCode = getResources().getStringArray(R.array.array_gyeongbuk_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 15:
                     arraySgg = getResources().getStringArray(R.array.array_gyeongnam);
                     arraySggCode = getResources().getStringArray(R.array.array_gyeongnam_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
                 case 16:
                     arraySgg = getResources().getStringArray(R.array.array_jeju);
                     arraySggCode = getResources().getStringArray(R.array.array_jeju_code);
-                    sidoCode = "&sidoCode=" + arraySido[i];
+                    sidoCode = "&sidoCode=" + arraySidoCode[i];
                     break;
             }
         });
@@ -208,11 +215,49 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
     }
 
     private void setButtonToSearchKinder() {
-
+        typeLinear.setVisibility(View.VISIBLE);
+        new Thread(() -> {
+            mList.clear();
+            try {
+                URL url = new URL(SCHOOL_URL + API_KEY + sidoCode + sggCode);
+                InputStream is = url.openStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                StringBuffer buffer = new StringBuffer();
+                String line = br.readLine();
+                while (line != null) {
+                    buffer.append(line + "\n");
+                    line = br.readLine();
+                }
+                String jsonData = buffer.toString();
+                obj = new JSONObject(jsonData);
+                JSONArray kinderArray = obj.getJSONArray("kinderInfo");
+                for (int i = 0; i < kinderArray.length(); i++) {
+                    JSONObject kinderObj = kinderArray.getJSONObject(i);
+                    kinderName = kinderObj.getString("kindername");
+                    kinderAddress = kinderObj.getString("addr");
+                    kinderTel = kinderObj.getString("telno");
+                    searchKinderDTO = new SearchKinderDTO(kinderName, kinderAddress, kinderTel);
+                    mList.add(searchKinderDTO);
+                }
+                searchKinderAdapter.setItems(mList);
+                runOnUiThread(() -> searchKinderAdapter.notifyDataSetChanged());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void setButtonToSearchKinderByName() {
-
+        mSearchList.clear();
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).getKinderName().contains(edtSearchKinder.getText().toString())) {
+                searchKinderDTO = new SearchKinderDTO(mList.get(i).getKinderName(), mList.get(i).getKinderAddress(), mList.get(i).getKinderTel());
+                mSearchList.add(searchKinderDTO);
+            }
+        }
+        searchKinderAdapter.setItems(mSearchList);
+        searchKinderAdapter.notifyDataSetChanged();
+        edtSearchKinder.setText("");
     }
 
     @Override
@@ -236,5 +281,22 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
                 setButtonToSearchKinderByName();
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.none, R.anim.fadeout);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.none, R.anim.fadeout);
     }
 }
