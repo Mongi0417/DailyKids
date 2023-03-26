@@ -58,6 +58,8 @@
             android:name=".SearchKinderActivity"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
+            android:name=".KinderInformationActivity"/>
+        <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
         <meta-data

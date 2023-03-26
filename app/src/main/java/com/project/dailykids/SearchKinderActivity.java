@@ -64,11 +64,12 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
         setToolbar();
         initView();
         initData();
+        initAdapter();
         setClickListener();
     }
 
     private void setToolbar() {
-        mView = findViewById(R.id.join3_toolbar);
+        mView = findViewById(R.id.search_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("유치원 검색");
@@ -100,6 +101,11 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
         arraySido = getResources().getStringArray(R.array.array_sido);
         arraySidoCode = getResources().getStringArray(R.array.array_sidoCode);
         dlg = new AlertDialog.Builder(this);
+    }
+
+    private void initAdapter() {
+        searchKinderAdapter = new SearchKinderAdapter(mList, getApplicationContext(), this, uid, who, nickname);
+        recyclerKinder.setAdapter(searchKinderAdapter);
     }
 
     private void setClickListener() {
