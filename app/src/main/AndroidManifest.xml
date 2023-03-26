@@ -43,22 +43,22 @@
         <activity
             android:name=".HomeActivity"/>
         <activity
-            android:name=".Join1Activity"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:name=".Join1Activity"/>
         <activity
-            android:name=".Join2Activity"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:name=".Join2Activity"/>
         <activity
-            android:name=".Join3Activity"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:name=".Join3Activity"/>
         <activity
             android:name=".ChatActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".SearchKinderActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:name=".SearchKinderActivity"/>
         <activity
             android:name=".KinderInformationActivity"/>
+        <activity
+            android:name=".NoticeActivity"/>
+        <activity
+            android:name=".NoticeWriteActivity"/>
         <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"/>
 

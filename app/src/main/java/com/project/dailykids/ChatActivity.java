@@ -32,7 +32,7 @@ public class ChatActivity extends AppCompatActivity {
     private View mView;
     private Toolbar toolbar;
     private TextView tvToolbarTitle;
-    private ArrayList<ChatDTO> chatList = new ArrayList<ChatDTO>();
+    private ArrayList<ChatDTO> chatList = new ArrayList<>();
     private EditText edtMessage;
     private Button btnSend;
     private RecyclerView chatView;

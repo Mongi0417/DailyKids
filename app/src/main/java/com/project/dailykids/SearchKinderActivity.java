@@ -44,8 +44,8 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
     private JSONObject obj;
     private SearchKinderDTO searchKinderDTO;
     private SearchKinderAdapter searchKinderAdapter;
-    private ArrayList<SearchKinderDTO> mList = new ArrayList<SearchKinderDTO>();
-    private ArrayList<SearchKinderDTO> mSearchList = new ArrayList<SearchKinderDTO>();
+    private ArrayList<SearchKinderDTO> mList = new ArrayList<>();
+    private ArrayList<SearchKinderDTO> mSearchList = new ArrayList<>();
     private DatabaseReference mDbRef;
     private String sidoCode;
     private String sggCode;
@@ -104,7 +104,7 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
     }
 
     private void initAdapter() {
-        searchKinderAdapter = new SearchKinderAdapter(mList, getApplicationContext(), this, uid, who, nickname);
+        searchKinderAdapter = new SearchKinderAdapter(mList, getApplicationContext(), this, who, nickname);
         recyclerKinder.setAdapter(searchKinderAdapter);
     }
 

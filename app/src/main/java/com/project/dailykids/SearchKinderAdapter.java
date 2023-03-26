@@ -18,13 +18,12 @@ public class SearchKinderAdapter extends RecyclerView.Adapter<SearchKinderAdapte
     private ArrayList<SearchKinderDTO> mData;
     private Context context;
     private GetJsonObject mCallback;
-    private String uid = "", who = "", nickname = "";
+    private String who = "", nickname = "";
 
-    public SearchKinderAdapter(ArrayList<SearchKinderDTO> mData, Context context, GetJsonObject mCallback, String uid, String who, String nickname) {
+    public SearchKinderAdapter(ArrayList<SearchKinderDTO> mData, Context context, GetJsonObject mCallback, String who, String nickname) {
         this.mData = mData;
         this.context = context;
         this.mCallback = mCallback;
-        this.uid = uid;
         this.who = who;
         this.nickname = nickname;
     }

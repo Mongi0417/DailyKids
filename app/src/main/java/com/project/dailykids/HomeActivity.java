@@ -121,15 +121,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = null;
         switch (view.getId()) {
             case R.id.home_fabChat:
-                intent = new Intent(HomeActivity.this, ChatActivity.class);
+                intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
                 break;
             case R.id.home_search:
-                intent = new Intent(HomeActivity.this, SearchKinderActivity.class);
+                intent = new Intent(this, SearchKinderActivity.class);
                 intent.putExtra("nickname", nickname);
                 intent.putExtra("who", who);
                 startActivity(intent);
+                break;
+            case R.id.home_notice:
+                intent = new Intent(this, NoticeActivity.class);
+                intent.putExtra("nickname", nickname);
+                intent.putExtra("who", who);
+                startActivity(intent);
+                break;
         }
     }
 

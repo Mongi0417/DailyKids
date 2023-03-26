@@ -23,7 +23,7 @@ android {
         buildConfigField "String", "NAVER_API_KEY_ID", properties['naver_api_key_id']
         buildConfigField "String", "KINDER_API_KEY", properties['kinder_api_key']
 
-        manifestPlaceholders = [NAVER_API_KEY_ID: "naver_api_key_id"]
+        manifestPlaceholders["NAVER_API_KEY_ID"] = properties["naver_api_key_id_for_mani"]
     }
 
     buildTypes {
@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-database'

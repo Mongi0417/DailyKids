@@ -49,6 +49,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.join_step1_layout);
 
         setToolbar();
+        initView();
         initData();
         checkPasswordLength();
         checkReEnterPassword();
