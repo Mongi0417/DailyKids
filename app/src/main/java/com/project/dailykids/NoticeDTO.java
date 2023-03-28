@@ -8,6 +8,7 @@ public class NoticeDTO {
     private String year;
     private String month;
     private String date;
+    private String noticeKey;
     private int notice;
     private long timestamp;
 
@@ -39,6 +40,10 @@ public class NoticeDTO {
         return date;
     }
 
+    public String getNoticeKey() {
+        return noticeKey;
+    }
+
     public int getNotice() {
         return notice;
     }
@@ -54,7 +59,7 @@ public class NoticeDTO {
     public NoticeDTO() {
     }
 
-    public NoticeDTO(String uid, String name, String title, String content, String year, String month, String date, int notice, long timestamp) {
+    public NoticeDTO(String uid, String name, String title, String content, String year, String month, String date, String noticeKey, int notice, long timestamp) {
         this.uid = uid;
         this.name = name;
         this.title = title;
@@ -62,6 +67,7 @@ public class NoticeDTO {
         this.year = year;
         this.month = month;
         this.date = date;
+        this.noticeKey = noticeKey;
         this.notice = notice;
         this.timestamp = timestamp;
     }

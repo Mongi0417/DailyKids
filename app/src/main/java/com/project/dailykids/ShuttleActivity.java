@@ -60,6 +60,11 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
         initView();
         initData();
         setMapFragment();
+
+        if (who.equals("교사")) {
+            setClickListener();
+            setFabButtonVisibility();
+        }
     }
 
     private void setToolbar() {
@@ -84,6 +89,18 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
         uid = FirebaseAuth.getInstance().getUid();
         who = getIntent().getStringExtra("who");
         mDbRef = FirebaseDatabase.getInstance().getReference();
+    }
+
+    private void setClickListener() {
+        fabShare.setOnClickListener(this);
+        fabStart.setOnClickListener(this);
+        fabEnd.setOnClickListener(this);
+    }
+
+    private void setFabButtonVisibility() {
+        fabShare.setVisibility(View.VISIBLE);
+        fabStart.setVisibility(View.VISIBLE);
+        fabEnd.setVisibility(View.VISIBLE);
     }
 
     private void setMapFragment() {
@@ -116,7 +133,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
         marker.setIcon(OverlayImage.fromResource(R.drawable.bus));
         marker.setWidth(80);
         marker.setHeight(80);
-        mDbRef.addValueEventListener(new ValueEventListener() {
+        mDbRef.child("shuttle").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 shuttleDTO = snapshot.getValue(ShuttleDTO.class);
@@ -143,7 +160,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 shuttleDTO = new ShuttleDTO(latitude, longitude, runState);
-                mDbRef.setValue(shuttleDTO);
+                mDbRef.child("shuttle").setValue(shuttleDTO);
                 tvRunState.setText(runState);
             }
         });
@@ -195,7 +212,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
                 shareState = false;
                 runState = "운행 중지";
                 shuttleDTO = new ShuttleDTO(0, 0, runState);
-                mDbRef.setValue(shuttleDTO);
+                mDbRef.child("shuttle").setValue(shuttleDTO);
                 tvRunState.setText(runState);
                 break;
         }

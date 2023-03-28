@@ -62,6 +62,8 @@
         <activity
             android:name=".ShuttleActivity"/>
         <activity
+            android:name=".ProfileActivity"/>
+        <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
         <meta-data

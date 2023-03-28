@@ -13,14 +13,13 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     private ArrayList<NoticeDTO> mData;
 
     public NoticeAdapter(ArrayList<NoticeDTO> list) {
-        this.mData = list;
+        mData = list;
     }
 
     @Override
     public NoticeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notice_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override

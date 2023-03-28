@@ -87,24 +87,15 @@ public class NoticeActivity extends AppCompatActivity {
     }
 
     private void loadNotice() {
-        mDbRef.child("notices").orderByChild("timestamp").addChildEventListener(new ChildEventListener() {
+        mDbRef.child("notices").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                noticeDTO = snapshot.getValue(NoticeDTO.class);
-                mList.add(noticeDTO);
-                noticeAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mList.clear();
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    noticeDTO = item.getValue(NoticeDTO.class);
+                    mList.add(noticeDTO);
+                }
+                noticeAdapter.notifyItemRangeChanged(0, noticeAdapter.getItemCount());
             }
 
             @Override

@@ -1,8 +1,5 @@
 package com.project.dailykids;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,94 +18,119 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Join3Activity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private View mView;
     private Toolbar toolbar;
-    private TextView tvToolbarTitle;
-    private String userEmail = "", userPassword = "", userNickname = "", userWho = "";
+    private TextView tvToolbarTitle, tvNickname;
     private CircleImageView imgProfile;
-    private Button btnUploadImg, btnJoin;
+    private Button btnEditProfile, btnLogout, btnDeleteAccount;
+    private String uid, nickname;
+    private StorageReference mStorageRef;
+    private DatabaseReference mDbRef;
     private Uri photoUri, cropUri;
     private File tempFile;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mRef;
-    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.none);
-        setContentView(R.layout.join_step3_layout);
+        setContentView(R.layout.profile_layout);
 
         setToolbar();
         initView();
         initData();
-        setButtonToLoadImage();
-        setButtonToJoin();
+        setClickListener();
+        loadProfile();
     }
 
     private void setToolbar() {
-        mView = findViewById(R.id.join3_toolbar);
+        mView = findViewById(R.id.profile_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
-        tvToolbarTitle.setText("회원가입");
+        tvToolbarTitle.setText("프로필");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void initView() {
-        imgProfile = findViewById(R.id.join3_imgProfile);
-        btnUploadImg = findViewById(R.id.join3_btnUploadImg);
-        btnJoin = findViewById(R.id.join3_btnJoin);
+        imgProfile = findViewById(R.id.profile_imgProfile);
+        btnEditProfile = findViewById(R.id.profile_btnEditProfile);
+        btnLogout = findViewById(R.id.profile_btnLogOut);
+        btnDeleteAccount = findViewById(R.id.profile_btnDeleteAccount);
     }
 
     private void initData() {
-        Intent intent = getIntent();
-        userEmail = intent.getStringExtra("email");
-        userPassword = intent.getStringExtra("password");
-        userNickname = intent.getStringExtra("nickname");
-        userWho = intent.getStringExtra("who");
-        mAuth = FirebaseAuth.getInstance();
-        mRef = FirebaseDatabase.getInstance().getReference();
+        uid = FirebaseAuth.getInstance().getUid();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
-    private void setButtonToLoadImage() {
-        ImageTedPermission imgTedPermission = new ImageTedPermission(this);
-        btnUploadImg.setOnClickListener(view -> {
-            imgTedPermission.tedPermission();
-            DialogInterface.OnClickListener cameraListener = (dialogInterface, i) -> takePhoto();
-            DialogInterface.OnClickListener albumListener = (dialogInterface, i) -> goToAlbum();
-            DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> dialogInterface.dismiss();
-            new AlertDialog.Builder(Join3Activity.this).setTitle("불러올 이미지 선택").setPositiveButton("앨범 선택", albumListener).setNeutralButton("취소", cancelListener).setNegativeButton("사진 촬영", cameraListener).show();
-        });
+    private void setClickListener() {
+        imgProfile.setOnClickListener(this);
+        btnEditProfile.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
+        btnDeleteAccount.setOnClickListener(this);
     }
 
-    private void setButtonToJoin() {
-        btnJoin.setOnClickListener(view -> {
-            createUser(userEmail, userPassword, userNickname, userWho, cropUri);
-        });
+    private void loadProfile() {
+        new Thread(() -> {
+            mStorageRef = FirebaseStorage.getInstance().getReference();
+            mDbRef = FirebaseDatabase.getInstance().getReference();
+            runOnUiThread(() -> {
+                mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(task -> {
+                    while (!task.isComplete()) ;
+                    Glide.with(ProfileActivity.this).load(task.getResult()).into(imgProfile);
+                });
+                mDbRef.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserDTO userDTO = snapshot.getValue(UserDTO.class);
+                        nickname = userDTO.getNickname();
+                        tvNickname.setText(nickname);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+            });
+        }).start();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.profile_imgProfile:
+                break;
+            case R.id.profile_btnEditProfile:
+                break;
+            case R.id.profile_btnLogOut:
+                break;
+            case R.id.profile_btnDeleteAccount:
+                break;
+        }
     }
 
     private void takePhoto() {
@@ -194,39 +216,11 @@ public class Join3Activity extends AppCompatActivity {
         imgProfile.setImageBitmap(originalBm);
     }
 
-    private void createUser(String email, String password, String nickname, String who, Uri cropUri) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                String uid = task.getResult().getUser().getUid();
-                String simpleDTOKey = mRef.child("SimpleUserData").push().getKey();
-                String kinderName = "무소속";
-                UserDTO userDTO = new UserDTO(uid, email, nickname, who, kinderName, simpleDTOKey);
-                SimpleUserDTO simpleUserDTO = new SimpleUserDTO(email, nickname);
-                mRef.child("SimpleUserData").child(simpleDTOKey).setValue(simpleUserDTO);
-                mRef.child("UserData").child(uid).setValue(userDTO);
-                mStorageRef.child("profile_img/").child(uid + ".jpg").putFile(cropUri);
-                tempFile.delete();
-                finishAffinity();
-                Intent intent = new Intent(Join3Activity.this, LoginActivity.class);
-                startActivity(intent);
-            } else {
-                try {
-                    throw task.getException();
-                } catch (Exception e) {
-                    Toast.makeText(this, "계정을 다시 확인해 주세요", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-        }).addOnFailureListener(e -> e.printStackTrace());
-    }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.none, R.anim.fadeout);
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.none, R.anim.fadeout);
         }
         return super.onOptionsItemSelected(item);
     }

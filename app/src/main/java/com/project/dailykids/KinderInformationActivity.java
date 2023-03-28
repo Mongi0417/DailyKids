@@ -54,7 +54,7 @@ public class KinderInformationActivity extends AppCompatActivity implements OnMa
     private Marker marker;
     private MyThread myThread;
     private NaverMap naverMap;
-    private DatabaseReference mDbRef;
+    //private DatabaseReference mDbRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +93,6 @@ public class KinderInformationActivity extends AppCompatActivity implements OnMa
         who = getIntent().getStringExtra("who");
         uid = FirebaseAuth.getInstance().getUid();
         kinderName = getIntent().getStringExtra("kinderName");
-        mDbRef = FirebaseDatabase.getInstance().getReference();
         try {
             obj = new JSONObject(getIntent().getStringExtra("kinderInfo"));
             kinderArray = obj.getJSONArray("kinderInfo");

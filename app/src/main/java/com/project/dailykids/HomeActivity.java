@@ -3,6 +3,9 @@ package com.project.dailykids;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,13 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int SIZE_OF_NOTICE = 4;
     private View mView;
     private Toolbar toolbar;
-    private TextView tvToolbarTitle, tvKinderName, tvNickname, tvPreNotice[] = new TextView[SIZE_OF_NOTICE], tvnDate[] = new TextView[SIZE_OF_NOTICE];
+    private TextView tvToolbarTitle, tvKinderName, tvNickname, tvNotice[] = new TextView[SIZE_OF_NOTICE], tvDate[] = new TextView[SIZE_OF_NOTICE];
     private int noticeId[] = {R.id.tvNotice1, R.id.tvNotice2, R.id.tvNotice3, R.id.tvNotice4}, dateId[] = {R.id.tvNoticeDate1, R.id.tvNoticeDate2, R.id.tvNoticeDate3, R.id.tvNoticeDate4};
     private DatabaseReference mDbRef;
     private StorageReference mStorageRef;
@@ -39,6 +44,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton fabChat;
     private long waitTime = 0;
     private String uid = "", nickname = "", kinderName = "", who = "";
+    private NoticeDTO noticeDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         setClickListener();
+        loadNotice();
 
         // 데이터 불러오기 및 프로필 설정(유치원 이름, 닉네임, 프로필 사진)
         new Thread(() -> runOnUiThread(() -> {
@@ -91,8 +98,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvKinderName = findViewById(R.id.home_tvKinderName);
         tvNickname = findViewById(R.id.home_tvNickname);
         for (int i = 0; i < SIZE_OF_NOTICE; i++) {
-            tvPreNotice[i] = findViewById(noticeId[i]);
-            tvnDate[i] = findViewById(dateId[i]);
+            tvNotice[i] = findViewById(noticeId[i]);
+            tvDate[i] = findViewById(dateId[i]);
         }
         imgProfile = findViewById(R.id.home_imgProfile);
         linearNotice = findViewById(R.id.home_notice);
@@ -114,6 +121,29 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         linearBoard.setOnClickListener(this);
         linearSearch.setOnClickListener(this);
         fabChat.setOnClickListener(this);
+    }
+
+    private void loadNotice() {
+        mDbRef.child("notices").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int num = 0;
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    noticeDTO = item.getValue(NoticeDTO.class);
+                    if (noticeDTO.getNotice() == 1) {
+                        tvNotice[num].setText(noticeDTO.getTitle());
+                        tvDate[num].setText(noticeDTO.getMonth() + noticeDTO.getDate());
+                        num++;
+                        if (num > 3)
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     @Override
@@ -139,6 +169,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.home_shuttle:
                 intent = new Intent(this, ShuttleActivity.class);
+                intent.putExtra("who", who);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
                 break;
@@ -153,5 +184,23 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             finish();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.home_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_profile:
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
