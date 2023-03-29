@@ -133,7 +133,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
         marker.setIcon(OverlayImage.fromResource(R.drawable.bus));
         marker.setWidth(80);
         marker.setHeight(80);
-        mDbRef.child("shuttle").addValueEventListener(new ValueEventListener() {
+        mDbRef.child("Shuttle").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 shuttleDTO = snapshot.getValue(ShuttleDTO.class);
@@ -160,7 +160,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 shuttleDTO = new ShuttleDTO(latitude, longitude, runState);
-                mDbRef.child("shuttle").setValue(shuttleDTO);
+                mDbRef.child("Shuttle").setValue(shuttleDTO);
                 tvRunState.setText(runState);
             }
         });
@@ -212,7 +212,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
                 shareState = false;
                 runState = "운행 중지";
                 shuttleDTO = new ShuttleDTO(0, 0, runState);
-                mDbRef.child("shuttle").setValue(shuttleDTO);
+                mDbRef.child("Shuttle").setValue(shuttleDTO);
                 tvRunState.setText(runState);
                 break;
         }

@@ -87,7 +87,7 @@ public class NoticeActivity extends AppCompatActivity {
     }
 
     private void loadNotice() {
-        mDbRef.child("notices").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDbRef.child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mList.clear();

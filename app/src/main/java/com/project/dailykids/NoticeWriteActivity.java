@@ -79,9 +79,9 @@ public class NoticeWriteActivity extends AppCompatActivity {
             long timestamp = System.currentTimeMillis() / 1000;
             if (chkNotice.isChecked())
                 notice = 1;
-            String noticeKey = mDbRef.child("notices").push().getKey();
+            String noticeKey = mDbRef.child("Notice").push().getKey();
             noticeDTO = new NoticeDTO(uid, nickname, edtTitle.getText().toString(), edtContent.getText().toString(), year + "년", month + "월", date  + "일", noticeKey, notice, -timestamp);
-            mDbRef.child("notices").child(noticeKey).setValue(noticeDTO);
+            mDbRef.child("Notice").child(noticeKey).setValue(noticeDTO);
             Toast.makeText(NoticeWriteActivity.this, "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
             overridePendingTransition(R.anim.none, R.anim.fadeout);

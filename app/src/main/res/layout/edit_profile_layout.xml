@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/edit_toolbar"
+        layout="@layout/toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/edit_tvNoticePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비밀번호 변경 시, 모든 기기에서 로그아웃되며\n다시 로그인해주셔야 합니다."
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_toolbar"
+        app:layout_constraintVertical_bias="0.05"/>
+
+    <EditText
+        android:id="@+id/edit_edtCurrentPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/yellow"
+        android:hint="현재 비밀번호"
+        android:inputType="textPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_tvNoticePassword"/>
+
+    <TextView
+        android:id="@+id/edit_tvCurrentPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/edit_edtCurrentPassword"
+        app:layout_constraintTop_toBottomOf="@id/edit_edtCurrentPassword"/>
+
+    <EditText
+        android:id="@+id/edit_edtNewPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/yellow"
+        android:hint="새로운 비밀번호"
+        android:inputType="textPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_tvCurrentPassword"/>
+
+    <EditText
+        android:id="@+id/edit_edtRePassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/yellow"
+        android:hint="새로운 비밀번호 재입력"
+        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_edtNewPassword"/>
+
+    <TextView
+        android:id="@+id/edit_tvNewPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/edit_edtRePassword"
+        app:layout_constraintTop_toBottomOf="@id/edit_edtRePassword"/>
+
+    <Button
+        android:id="@+id/edit_btnChangePassword"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="비밀번호 변경"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_tvNewPassword"/>
+
+    <TextView
+        android:id="@+id/edit_tvNoticeNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="이름 변경 시, 메인 화면으로 돌아갑니다."
+        android:textColor="@color/red"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_btnChangePassword"/>
+
+    <EditText
+        android:id="@+id/edit_edtNewNickname"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/yellow"
+        android:hint="새로운 이름 입력"
+        android:maxLines="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_tvNoticeNickname"/>
+
+    <TextView
+        android:id="@+id/edit_tvNewNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/edit_edtNewNickname"
+        app:layout_constraintTop_toBottomOf="@id/edit_edtNewNickname"/>
+
+    <Button
+        android:id="@+id/edit_btnChangeNickname"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="이름 변경"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_tvNewNickname"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

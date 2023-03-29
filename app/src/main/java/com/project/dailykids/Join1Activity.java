@@ -37,7 +37,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
     private Button btnCheckEmail, btnCheckNickname, btnNext;
     private RadioGroup rdGroup;
     private RadioButton rdButton;
-    private boolean isEmailAddressFormat, isAvailableEmailAddress, isLongPassword, isSamePassword, isAppropriateLengthForNickname, isAvailableNickname;
+    private boolean isEmailAddressFormat, isAvailableEmailAddress, isLongPassword, isSamePassword, isProperLengthForNickname, isAvailableNickname;
     private DatabaseReference mDbRef;
     private SimpleUserDTO simpleUserDTO;
     private String userEmail = "", userPassword = "", userPasswordForCheck = "", userNickname = "";
@@ -198,12 +198,12 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 userNickname = edtNickname.getText().toString();
                 if (userNickname.length() < 2 || userNickname.length() > 8) {
-                    isAppropriateLengthForNickname = false;
+                    isProperLengthForNickname = false;
                     tvCheckNickname.setTextColor(Color.RED);
                     tvCheckNickname.setText("2-8자 이내로 설정해주세요.");
                     tvCheckNickname.setVisibility(View.VISIBLE);
                 } else {
-                    isAppropriateLengthForNickname = true;
+                    isProperLengthForNickname = true;
                     tvCheckNickname.setVisibility(View.GONE);
                 }
             }
@@ -276,7 +276,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
             case R.id.join1_btnCheckNickname:
                 hideKeyboard();
                 checkNicknameLength();
-                if (isAppropriateLengthForNickname)
+                if (isProperLengthForNickname)
                     checkDuplicatedNickname();
                 break;
             case R.id.join1_btnNext:

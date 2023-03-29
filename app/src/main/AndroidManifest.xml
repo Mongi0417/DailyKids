@@ -32,7 +32,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -40,34 +39,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".HomeActivity"/>
-        <activity
-            android:name=".Join1Activity"/>
-        <activity
-            android:name=".Join2Activity"/>
-        <activity
-            android:name=".Join3Activity"/>
-        <activity
-            android:name=".ChatActivity"
+        <activity android:name=".HomeActivity"/>
+        <activity android:name=".Join1Activity"/>
+        <activity android:name=".Join2Activity"/>
+        <activity android:name=".Join3Activity"/>
+        <activity android:name=".ChatActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".SearchKinderActivity"/>
-        <activity
-            android:name=".KinderInformationActivity"/>
-        <activity
-            android:name=".NoticeActivity"/>
-        <activity
-            android:name=".NoticeWriteActivity"/>
-        <activity
-            android:name=".ShuttleActivity"/>
-        <activity
-            android:name=".ProfileActivity"/>
-        <activity
-            android:name="com.soundcloud.android.crop.CropImageActivity"/>
+        <activity android:name=".SearchKinderActivity"/>
+        <activity android:name=".KinderInformationActivity"/>
+        <activity android:name=".NoticeActivity"/>
+        <activity android:name=".NoticeWriteActivity"/>
+        <activity android:name=".ShuttleActivity"/>
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".EditProfileActivity"/>
+        <activity android:name=".DeleteAccountActivity"/>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
-        <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
+        <meta-data android:name="com.naver.maps.map.CLIENT_ID"
             android:value="${NAVER_API_KEY_ID}"/>
     </application>
 

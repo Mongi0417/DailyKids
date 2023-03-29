@@ -56,32 +56,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         setClickListener();
+        loadProfile();
         loadNotice();
-
-        // 데이터 불러오기 및 프로필 설정(유치원 이름, 닉네임, 프로필 사진)
-        new Thread(() -> runOnUiThread(() -> {
-            mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    GlideApp.with(HomeActivity.this).load(task.getResult()).into(imgProfile);
-                }
-            });
-            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserDTO userDTO = snapshot.getValue(UserDTO.class);
-                    nickname = userDTO.getNickname();
-                    kinderName = userDTO.getKinderName();
-                    who = userDTO.getWho();
-                    tvKinderName.setText(kinderName);
-                    tvNickname.setText(nickname);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        })).start();
     }
 
     private void setToolbar() {
@@ -124,7 +100,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadNotice() {
-        mDbRef.child("notices").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDbRef.child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int num = 0;
@@ -144,6 +120,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void loadProfile() {
+        new Thread(() -> runOnUiThread(() -> {
+            mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    GlideApp.with(HomeActivity.this).load(task.getResult()).into(imgProfile);
+                }
+            });
+            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserDTO userDTO = snapshot.getValue(UserDTO.class);
+                    nickname = userDTO.getNickname();
+                    kinderName = userDTO.getKinderName();
+                    who = userDTO.getWho();
+                    tvKinderName.setText(kinderName);
+                    tvNickname.setText(nickname);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        })).start();
     }
 
     @Override

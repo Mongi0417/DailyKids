@@ -78,7 +78,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void loadChatData() {
-        mRef.child("chats").addChildEventListener(new ChildEventListener() {
+        mRef.child("Chat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 chatDTO = snapshot.getValue(ChatDTO.class);
@@ -114,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
             Date date = new Date(now);
             String timeStamp = new SimpleDateFormat("yyyy.MM.dd HH:mm").format(date);
             chatDTO = new ChatDTO(uid, nickname, edtMessage.getText().toString(), timeStamp);
-            mRef.child("chats").push().setValue(chatDTO);
+            mRef.child("Chat").push().setValue(chatDTO);
             edtMessage.setText("");
             hideKeyboard();
         });

@@ -1,5 +1,7 @@
 package com.project.dailykids;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,40 +99,48 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void loadProfile() {
-        new Thread(() -> {
-            mStorageRef = FirebaseStorage.getInstance().getReference();
-            mDbRef = FirebaseDatabase.getInstance().getReference();
-            runOnUiThread(() -> {
-                mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(task -> {
-                    while (!task.isComplete()) ;
-                    Glide.with(ProfileActivity.this).load(task.getResult()).into(imgProfile);
-                });
-                mDbRef.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        UserDTO userDTO = snapshot.getValue(UserDTO.class);
-                        nickname = userDTO.getNickname();
-                        tvNickname.setText(nickname);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
+        new Thread(() -> runOnUiThread(() -> {
+            mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(task -> {
+                while (!task.isComplete()) ;
+                Glide.with(ProfileActivity.this).load(task.getResult()).into(imgProfile);
             });
-        }).start();
+            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserDTO userDTO = snapshot.getValue(UserDTO.class);
+                    nickname = userDTO.getNickname();
+                    tvNickname.setText(nickname);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        })).start();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.profile_imgProfile:
+            case R.id.profile_imgProfile:ImageTedPermission imgTedPermission = new ImageTedPermission(this);
+                imgTedPermission.tedPermission();
+                DialogInterface.OnClickListener cameraListener = (dialogInterface, i) -> takePhoto();
+                DialogInterface.OnClickListener albumListener = (dialogInterface, i) -> goToAlbum();
+                DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> dialogInterface.dismiss();
+                new AlertDialog.Builder(ProfileActivity.this).setTitle("업로드할 이미지 선택").setPositiveButton("앨범 선택", albumListener)
+                        .setNeutralButton("취소", cancelListener).setNegativeButton("사진 촬영", cameraListener).show();
                 break;
             case R.id.profile_btnEditProfile:
+                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
                 break;
             case R.id.profile_btnLogOut:
+                FirebaseAuth.getInstance().signOut();
+                finishAffinity();
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                 break;
             case R.id.profile_btnDeleteAccount:
+                startActivity(new Intent(ProfileActivity.this, DeleteAccountActivity.class));
                 break;
         }
     }
@@ -191,6 +203,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case Crop.REQUEST_CROP:
                 setImage();
+                mStorageRef.child("profile_img/").child(uid + ".jpg").delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                            mStorageRef.child("profile_img/").child(uid + ".jpg").putFile(cropUri);
+                    }
+                });
                 break;
         }
     }
@@ -214,6 +233,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
         imgProfile.setImageBitmap(originalBm);
+        tempFile.delete();
     }
 
     @Override
