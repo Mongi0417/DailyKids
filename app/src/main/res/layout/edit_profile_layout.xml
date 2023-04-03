@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="이름 변경 시, 메인 화면으로 돌아갑니다."
+        android:text="닉네임 변경 시, 메인 화면으로 돌아갑니다."
         android:textColor="@color/red"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -102,8 +102,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/yellow"
-        android:hint="새로운 이름 입력"
-        android:maxLines="1"
+        android:inputType="text"
+        android:hint="새로운 닉네임 입력"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_tvNoticeNickname"/>
@@ -121,7 +121,7 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="이름 변경"
+        android:text="닉네임 변경"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_tvNewNickname"/>

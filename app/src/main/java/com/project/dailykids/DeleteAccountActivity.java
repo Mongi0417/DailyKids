@@ -17,8 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +53,7 @@ public class DeleteAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setToolbar() {
-        mView = findViewById(R.id.profile_toolbar);
+        mView = findViewById(R.id.delete_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("프로필");

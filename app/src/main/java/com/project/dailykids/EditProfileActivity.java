@@ -52,13 +52,14 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         setToolbar();
         initView();
         initData();
+        setClickListener();
         checkNewPasswordLength();
         checkReNewPassword();
         checkNicknameLength();
     }
 
     private void setToolbar() {
-        mView = findViewById(R.id.profile_toolbar);
+        mView = findViewById(R.id.edit_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("프로필 변경");
@@ -81,6 +82,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void initData() {
         uid = FirebaseAuth.getInstance().getUid();
+    }
+
+    private void setClickListener() {
+        btnChangePassword.setOnClickListener(this);
+        btnChangeName.setOnClickListener(this);
     }
 
     private void checkNewPasswordLength() {
@@ -184,8 +190,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         if (task.isSuccessful())
                             changePassword(newPassword, user);
                         else {
-                            tvNewPassword.setTextColor(Color.RED);
-                            tvNewPassword.setText("현재 비밀번호가 일치하지 않습니다.");
+                            tvCurrentPassword.setTextColor(Color.RED);
+                            tvCurrentPassword.setText("현재 비밀번호가 일치하지 않습니다.");
                         }
                     }
                 });
@@ -247,7 +253,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 UserDTO userDTO = snapshot.getValue(UserDTO.class);
                 String simpleDTOKey = userDTO.getSimpleDTOKey();
                 Map<String, Object> userMap = new HashMap<>();
-                userMap.put("userName", newNickname);
+                userMap.put("nickname", newNickname);
                 databaseReference.child("SimpleUserData").child(simpleDTOKey).updateChildren(userMap);
                 databaseReference.child("UserData").child(uid).updateChildren(userMap);
             }

@@ -79,6 +79,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
+        tvNickname = findViewById(R.id.profile_tvNickname);
         imgProfile = findViewById(R.id.profile_imgProfile);
         btnEditProfile = findViewById(R.id.profile_btnEditProfile);
         btnLogout = findViewById(R.id.profile_btnLogOut);
