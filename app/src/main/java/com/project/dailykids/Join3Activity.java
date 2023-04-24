@@ -199,7 +199,7 @@ public class Join3Activity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 String uid = task.getResult().getUser().getUid();
                 String simpleDTOKey = mRef.child("SimpleUserData").push().getKey();
-                String kinderName = "무소속";
+                String kinderName = "";
                 UserDTO userDTO = new UserDTO(uid, email, nickname, who, kinderName, simpleDTOKey);
                 SimpleUserDTO simpleUserDTO = new SimpleUserDTO(email, nickname);
                 mRef.child("SimpleUserData").child(simpleDTOKey).setValue(simpleUserDTO);

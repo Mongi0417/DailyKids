@@ -1,6 +1,5 @@
 package com.project.dailykids;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -41,6 +39,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
     private DatabaseReference mDbRef;
     private SimpleUserDTO simpleUserDTO;
     private String userEmail = "", userPassword = "", userPasswordForCheck = "", userNickname = "";
+    private HideKeyboard hk = new HideKeyboard();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,25 +255,17 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(Join1Activity.this, "입력 정보를 확인해 주세요.", Toast.LENGTH_SHORT).show();
     }
 
-    private void hideKeyboard() {
-        View v = getCurrentFocus();
-        if (v != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        }
-    }
-
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.join1_btnCheckEmail:
-                hideKeyboard();
+                hk.hideKeyboard();
                 checkEmailAddressFormat();
                 if (isEmailAddressFormat)
                     checkDuplicatedEmailAddress();
                 break;
             case R.id.join1_btnCheckNickname:
-                hideKeyboard();
+                hk.hideKeyboard();
                 checkNicknameLength();
                 if (isProperLengthForNickname)
                     checkDuplicatedNickname();

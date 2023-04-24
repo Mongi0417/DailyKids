@@ -103,15 +103,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         mDbRef.child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int num = 0;
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    noticeDTO = item.getValue(NoticeDTO.class);
-                    if (noticeDTO.getNotice() == 1) {
-                        tvNotice[num].setText(noticeDTO.getTitle());
-                        tvDate[num].setText(noticeDTO.getMonth() + noticeDTO.getDate());
-                        num++;
-                        if (num > 3)
-                            break;
+                for (int num = 0; num < 4;) {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        noticeDTO = item.getValue(NoticeDTO.class);
+                        if (noticeDTO.getNotice() == 1) {
+                            tvNotice[num].setText(noticeDTO.getTitle());
+                            tvDate[num].setText(noticeDTO.getMonth() + noticeDTO.getDate());
+                            num++;
+                        }
                     }
                 }
             }
@@ -124,12 +123,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadProfile() {
         new Thread(() -> runOnUiThread(() -> {
-            mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            GlideApp.with(HomeActivity.this).load(mStorageRef.child("profile_img/").child(uid + ".jpg")).into(imgProfile);
+            /*mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     GlideApp.with(HomeActivity.this).load(task.getResult()).into(imgProfile);
                 }
-            });
+            });*/
             mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

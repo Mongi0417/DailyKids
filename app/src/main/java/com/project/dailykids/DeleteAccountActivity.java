@@ -125,8 +125,7 @@ public class DeleteAccountActivity extends AppCompatActivity implements View.OnC
                         btnCheckPassword.setBackgroundResource(R.drawable.btn_yellow_light);
                         btnDelete.setBackgroundResource(R.drawable.btn_yellow);
                         btnDelete.setClickable(true);
-                        HideKeyboard hk = new HideKeyboard();
-                        hk.hideKeyboard();
+                        new HideKeyboard().hideKeyboard();
                     } else {
                         tvCheckPassword.setTextColor(Color.RED);
                         tvCheckPassword.setText("현재 비밀번호와 일치하지 않습니다.");
