@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <uses-feature android:name="android.hardware.camera2"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false"/>
 
     <application
         android:allowBackup="true"
@@ -30,7 +33,7 @@
         </provider>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
@@ -39,20 +42,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".Join1Activity"/>
-        <activity android:name=".Join2Activity"/>
-        <activity android:name=".Join3Activity"/>
-        <activity android:name=".ChatActivity"
+        <activity android:name=".activities.HomeActivity"/>
+        <activity android:name=".activities.Join1Activity"/>
+        <activity android:name=".activities.Join2Activity"/>
+        <activity android:name=".activities.Join3Activity"/>
+        <activity android:name=".activities.ChatActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".SearchKinderActivity"/>
-        <activity android:name=".KinderInformationActivity"/>
-        <activity android:name=".NoticeActivity"/>
-        <activity android:name=".NoticeWriteActivity"/>
-        <activity android:name=".ShuttleActivity"/>
-        <activity android:name=".ProfileActivity"/>
-        <activity android:name=".EditProfileActivity"/>
-        <activity android:name=".DeleteAccountActivity"/>
+        <activity android:name=".activities.SearchKinderActivity"/>
+        <activity android:name=".activities.KinderInformationActivity"/>
+        <activity android:name=".activities.NoticeActivity"/>
+        <activity android:name=".activities.WriteNoticeActivity"/>
+        <activity android:name=".activities.ShuttleActivity"/>
+        <activity android:name=".activities.ProfileActivity"/>
+        <activity android:name=".activities.EditProfileActivity"/>
+        <activity android:name=".activities.DeleteAccountActivity"/>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
         <meta-data android:name="com.naver.maps.map.CLIENT_ID"
