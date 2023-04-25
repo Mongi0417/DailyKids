@@ -1,11 +1,9 @@
 package com.project.dailykids.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.project.dailykids.R;
 import com.project.dailykids.adapter.ChatAdapter;
 import com.project.dailykids.models.Chat;
+import com.project.dailykids.utils.HideKeyboard;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,16 +118,8 @@ public class ChatActivity extends AppCompatActivity {
             chatDTO = new Chat(uid, nickname, edtMessage.getText().toString(), timeStamp);
             mRef.child("Chat").push().setValue(chatDTO);
             edtMessage.setText("");
-            hideKeyboard();
+            new HideKeyboard().hideKeyboard();
         });
-    }
-
-    private void hideKeyboard() {
-        View v = getCurrentFocus();
-        if (v != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        }
     }
 
     @Override

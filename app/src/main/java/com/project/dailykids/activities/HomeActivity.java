@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.project.dailykids.GlideApp;
 import com.project.dailykids.R;
 import com.project.dailykids.models.Notice;
 import com.project.dailykids.models.User;
@@ -121,14 +121,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadProfile() {
-        new Thread(() -> runOnUiThread(() -> {
-            GlideApp.with(HomeActivity.this).load(mStorageRef.child("profile_img/").child(uid + ".jpg")).into(imgProfile);
-            /*mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    GlideApp.with(HomeActivity.this).load(task.getResult()).into(imgProfile);
-                }
-            });*/
+        /*new Thread(() -> runOnUiThread(() -> {
             mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -144,7 +137,28 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
-        })).start();
+        })).start();*/
+        new Thread(() -> {
+            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    nickname = user.getNickname();
+                    kinderName = user.getKinderName();
+                    who = user.getWho();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            runOnUiThread(() -> {
+                Glide.with(HomeActivity.this).load(mStorageRef).into(imgProfile);
+                tvKinderName.setText(kinderName);
+                tvNickname.setText(nickname);
+            });
+        }).start();
     }
 
     @Override

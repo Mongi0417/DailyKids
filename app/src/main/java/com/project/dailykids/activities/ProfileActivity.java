@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         new Thread(() -> runOnUiThread(() -> {
             mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(task -> {
                 while (!task.isComplete()) ;
-                Glide.with(ProfileActivity.this).load(task.getResult()).into(imgProfile);
+                //Glide.with(ProfileActivity.this).load(task.getResult()).into(imgProfile);
             });
             mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

@@ -1,12 +1,10 @@
 package com.project.dailykids.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +24,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.project.dailykids.R;
+import com.project.dailykids.utils.HideKeyboard;
 
 import java.util.concurrent.TimeUnit;
 
@@ -99,8 +98,7 @@ public class Join2Activity extends AppCompatActivity {
                     sendVerificationCode("+82" + userPhone.substring(1));
                 } else
                     Toast.makeText(Join2Activity.this, "전화번호를 확인해 주세요.", Toast.LENGTH_SHORT).show();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
+                new HideKeyboard().hideKeyboard();
             }
         });
 
