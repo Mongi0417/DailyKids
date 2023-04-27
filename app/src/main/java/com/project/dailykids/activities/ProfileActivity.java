@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -102,24 +103,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void loadProfile() {
-        new Thread(() -> runOnUiThread(() -> {
-            mStorageRef.child("profile_img/").child(uid + ".jpg").getDownloadUrl().addOnCompleteListener(task -> {
-                while (!task.isComplete()) ;
-                //Glide.with(ProfileActivity.this).load(task.getResult()).into(imgProfile);
-            });
-            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    nickname = user.getNickname();
-                    tvNickname.setText(nickname);
-                }
+        Glide.with(ProfileActivity.this).load(mStorageRef.child("profile_img/").child(uid + ".jpg")).into(imgProfile);
+        mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                nickname = user.getNickname();
+                tvNickname.setText(nickname);
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        })).start();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     @Override
@@ -237,6 +233,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
         imgProfile.setImageBitmap(originalBm);
         tempFile.delete();
+        tempFile = null;
     }
 
     @Override

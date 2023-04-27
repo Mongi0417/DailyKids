@@ -65,7 +65,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText(R.string.app_name_eng);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
@@ -99,17 +98,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadNotice() {
-        mDbRef.child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDbRef.child("Notice").orderByChild("timestamp").limitToFirst(4).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (int num = 0; num < 4;) {
-                    for (DataSnapshot item : snapshot.getChildren()) {
-                        notice = item.getValue(Notice.class);
-                        if (notice.getNotice() == 1) {
-                            tvNotice[num].setText(notice.getTitle());
-                            tvDate[num].setText(notice.getMonth() + notice.getDate());
-                            num++;
-                        }
+                int num = 0;
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    notice = item.getValue(Notice.class);
+                    if (notice.getNotice() == 1) {
+                        tvNotice[num].setText(notice.getTitle());
+                        tvDate[num].setText(notice.getMonth() + notice.getDate());
+                        num++;
                     }
                 }
             }
@@ -121,24 +119,24 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadProfile() {
-        /*new Thread(() -> runOnUiThread(() -> {
-            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    nickname = user.getNickname();
-                    kinderName = user.getKinderName();
-                    who = user.getWho();
-                    tvKinderName.setText(kinderName);
-                    tvNickname.setText(nickname);
-                }
+        Glide.with(HomeActivity.this).load(mStorageRef.child("profile_img/").child(uid + ".jpg")).into(imgProfile);
+        mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                nickname = user.getNickname();
+                tvNickname.setText(nickname);
+                kinderName = user.getKinderName();
+                tvKinderName.setText(kinderName);
+                who = user.getWho();
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        })).start();*/
-        new Thread(() -> {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        /*new Thread(() -> {
             mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -158,7 +156,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 tvKinderName.setText(kinderName);
                 tvNickname.setText(nickname);
             });
-        }).start();
+        }).start();*/
     }
 
     @Override
