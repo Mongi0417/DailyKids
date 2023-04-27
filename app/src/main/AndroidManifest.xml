@@ -45,7 +45,7 @@
         <activity android:name=".activities.HomeActivity"/>
         <activity android:name=".activities.Join1Activity"/>
         <activity android:name=".activities.Join2Activity"/>
-        <activity android:name=".activities.Join3Activity"/>
+        <activity android:name=".activities.Join2Activity"/>
         <activity android:name=".activities.ChatActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.SearchKinderActivity"/>
