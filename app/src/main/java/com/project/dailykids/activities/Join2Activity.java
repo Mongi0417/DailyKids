@@ -26,8 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.project.dailykids.R;
-import com.project.dailykids.models.UserSimple;
 import com.project.dailykids.models.User;
+import com.project.dailykids.models.UserSimple;
 import com.project.dailykids.utils.ImageTedPermission;
 import com.soundcloud.android.crop.Crop;
 
