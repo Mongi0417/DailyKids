@@ -248,7 +248,7 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
     private void moveToSecondJoin() {
         rdButton = findViewById(rdGroup.getCheckedRadioButtonId());
         if (isAvailableEmailAddress && isLongPassword && isSamePassword && isAvailableNickname && (rdButton != null)) {
-            Intent intent = new Intent(Join1Activity.this, Join3Activity.class);
+            Intent intent = new Intent(Join1Activity.this, Join2Activity.class);
             intent.putExtra("email", userEmail);
             intent.putExtra("password", userPassword);
             intent.putExtra("nickname", userNickname);
