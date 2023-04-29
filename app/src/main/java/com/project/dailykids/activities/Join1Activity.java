@@ -1,5 +1,6 @@
 package com.project.dailykids.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -26,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.dailykids.R;
 import com.project.dailykids.models.UserSimple;
-import com.project.dailykids.utils.HideKeyboard;
 
 import java.util.regex.Pattern;
 
@@ -42,7 +43,6 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
     private DatabaseReference mDbRef;
     private UserSimple userSimple;
     private String userEmail = "", userPassword = "", userPasswordForCheck = "", userNickname = "";
-    private HideKeyboard hk = new HideKeyboard();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,15 +260,16 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        switch (view.getId()) {
             case R.id.join1_btnCheckEmail:
-                hk.hideKeyboard();
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 checkEmailAddressFormat();
                 if (isEmailAddressFormat)
                     checkDuplicatedEmailAddress();
                 break;
             case R.id.join1_btnCheckNickname:
-                hk.hideKeyboard();
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 checkNicknameLength();
                 if (isProperLengthForNickname)
                     checkDuplicatedNickname();

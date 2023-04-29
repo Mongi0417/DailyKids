@@ -1,6 +1,7 @@
 package com.project.dailykids.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,7 +32,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.project.dailykids.R;
 import com.project.dailykids.models.User;
-import com.project.dailykids.utils.HideKeyboard;
 
 public class DeleteAccountActivity extends AppCompatActivity implements View.OnClickListener {
     private View mView;
@@ -128,7 +129,8 @@ public class DeleteAccountActivity extends AppCompatActivity implements View.OnC
                         btnCheckPassword.setBackgroundResource(R.drawable.btn_yellow_light);
                         btnDelete.setBackgroundResource(R.drawable.btn_yellow);
                         btnDelete.setClickable(true);
-                        new HideKeyboard().hideKeyboard();
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     } else {
                         tvCheckPassword.setTextColor(Color.RED);
                         tvCheckPassword.setText("현재 비밀번호와 일치하지 않습니다.");
