@@ -67,8 +67,10 @@ public class NoticeActivity extends AppCompatActivity {
 
     private void initView() {
         recyclerNotice = findViewById(R.id.notice_recycler);
-        fabWrite = findViewById(R.id.notice_fabWrite);
+        noticeAdapter = new NoticeAdapter(mList);
+        recyclerNotice.setAdapter(noticeAdapter);
         recyclerNotice.setLayoutManager(new LinearLayoutManager(this));
+        fabWrite = findViewById(R.id.notice_fabWrite);
     }
 
     private void initData() {
@@ -76,8 +78,6 @@ public class NoticeActivity extends AppCompatActivity {
         nickname = getIntent().getStringExtra("nickname");
         who = getIntent().getStringExtra("who");
         mDbRef = FirebaseDatabase.getInstance().getReference();
-        noticeAdapter = new NoticeAdapter(mList);
-        recyclerNotice.setAdapter(noticeAdapter);
     }
 
     private void setButtonToWriteNotice() {
@@ -108,11 +108,9 @@ public class NoticeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.none, R.anim.fadeout);
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.none, R.anim.fadeout);
         }
         return super.onOptionsItemSelected(item);
     }

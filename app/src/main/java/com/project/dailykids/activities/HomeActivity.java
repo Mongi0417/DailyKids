@@ -136,27 +136,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        /*new Thread(() -> {
-            mDbRef.child("UserData").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    User user = snapshot.getValue(User.class);
-                    nickname = user.getNickname();
-                    kinderName = user.getKinderName();
-                    who = user.getWho();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            runOnUiThread(() -> {
-                Glide.with(HomeActivity.this).load(mStorageRef).into(imgProfile);
-                tvKinderName.setText(kinderName);
-                tvNickname.setText(nickname);
-            });
-        }).start();*/
     }
 
     @Override
@@ -186,6 +165,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
                 break;
+            case R.id.home_board:
+                intent = new Intent(this, BoardActivity.class);
+                intent.putExtra("who", who);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -208,11 +193,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_profile:
-                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-                startActivity(intent);
-                break;
+        if (item.getItemId() == R.id.menu_profile) {
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

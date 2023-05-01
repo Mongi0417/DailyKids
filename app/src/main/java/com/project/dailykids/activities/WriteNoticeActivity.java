@@ -91,11 +91,9 @@ public class WriteNoticeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.none, R.anim.fadeout);
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.none, R.anim.fadeout);
         }
         return super.onOptionsItemSelected(item);
     }
