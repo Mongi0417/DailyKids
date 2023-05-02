@@ -1,6 +1,7 @@
 package com.project.dailykids.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,12 +90,13 @@ public class KinderInformationActivity extends AppCompatActivity implements OnMa
     }
 
     private void initData() {
-        nickname = getIntent().getStringExtra("nickname");
-        who = getIntent().getStringExtra("who");
+        Intent intent = getIntent();
+        nickname = intent.getStringExtra("nickname");
+        who = intent.getStringExtra("who");
+        kinderName = intent.getStringExtra("kinderName");
         uid = FirebaseAuth.getInstance().getUid();
-        kinderName = getIntent().getStringExtra("kinderName");
         try {
-            obj = new JSONObject(getIntent().getStringExtra("kinderInfo"));
+            obj = new JSONObject(intent.getStringExtra("kinderInfo"));
             kinderArray = obj.getJSONArray("kinderInfo");
         } catch (Exception e) {
             e.printStackTrace();

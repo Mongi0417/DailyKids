@@ -36,7 +36,7 @@ public class BoardActivity extends AppCompatActivity {
     private ArrayList<Board> mList = new ArrayList<>();
     private ExtendedFloatingActionButton fabWrite;
     private DatabaseReference mDbRef;
-    private String uid = "", nickname = "", who = "";
+    private String uid = "", nickname = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,8 +72,8 @@ public class BoardActivity extends AppCompatActivity {
 
     private void initData() {
         uid = FirebaseAuth.getInstance().getUid();
-        nickname = getIntent().getStringExtra("nickname");
-        who = getIntent().getStringExtra("who");
+        Intent intent = getIntent();
+        nickname = intent.getStringExtra("nickname");
         mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -88,6 +88,13 @@ public class BoardActivity extends AppCompatActivity {
     private void setItemClickListener() {
         boardAdapter.setOnItemClickListener((view, position) -> {
             Intent intent = new Intent(BoardActivity.this, BoardContentActivity.class);
+            intent.putExtra("nickname", nickname);
+            intent.putExtra("writer", mList.get(position).getName());
+            intent.putExtra("date", mList.get(position).getDate());
+            intent.putExtra("title", mList.get(position).getTitle());
+            intent.putExtra("content", mList.get(position).getContent());
+            intent.putExtra("time", mList.get(position).getTime());
+            intent.putExtra("boardKey", mList.get(position).getBoardKey());
         });
     }
 

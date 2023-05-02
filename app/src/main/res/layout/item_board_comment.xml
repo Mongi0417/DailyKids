@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:paddingLeft="5dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:background="@drawable/board_background">
+
+    <TextView
+        android:id="@+id/board_comment_tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:textColor="@color/black"
+        android:textSize="10dp"/>
+
+    <TextView
+        android:id="@+id/board_comment_tvComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="댓글입니다"
+        android:textSize="10dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/board_comment_tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="2022년 03월 01일 03:02"
+        android:textSize="9dp"/>
+</LinearLayout>

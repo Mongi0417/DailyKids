@@ -228,36 +228,7 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
     private void setButtonToSearchKinder() {
         typeLinear.setVisibility(View.VISIBLE);
         mList.clear();
-
-        /*new Thread(() -> {
-            mList.clear();
-            try {
-                URL url = new URL(SCHOOL_URL + API_KEY + sidoCode + sggCode);
-                InputStream is = url.openStream();
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                StringBuffer buffer = new StringBuffer();
-                String line = br.readLine();
-                while (line != null) {
-                    buffer.append(line + "\n");
-                    line = br.readLine();
-                }
-                String jsonData = buffer.toString();
-                obj = new JSONObject(jsonData);
-                JSONArray kinderArray = obj.getJSONArray("kinderInfo");
-                for (int i = 0; i < kinderArray.length(); i++) {
-                    JSONObject kinderObj = kinderArray.getJSONObject(i);
-                    kinderName = kinderObj.getString("kindername");
-                    kinderAddress = kinderObj.getString("addr");
-                    kinderTel = kinderObj.getString("telno");
-                    kinderInfo = new KinderInfo(kinderName, kinderAddress, kinderTel);
-                    mList.add(kinderInfo);
-                }
-                searchKinderAdapter.setItems(mList);
-                runOnUiThread(() -> searchKinderAdapter.notifyDataSetChanged());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();*/
+        loadKinderInformation();
     }
 
     private void loadKinderInformation() {

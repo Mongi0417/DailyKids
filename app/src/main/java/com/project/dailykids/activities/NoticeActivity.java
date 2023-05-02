@@ -75,8 +75,9 @@ public class NoticeActivity extends AppCompatActivity {
 
     private void initData() {
         uid = FirebaseAuth.getInstance().getUid();
-        nickname = getIntent().getStringExtra("nickname");
-        who = getIntent().getStringExtra("who");
+        Intent intent = getIntent();
+        nickname = intent.getStringExtra("nickname");
+        who = intent.getStringExtra("who");
         mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
