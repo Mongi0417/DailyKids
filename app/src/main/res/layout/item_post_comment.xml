@@ -7,10 +7,10 @@
     android:paddingLeft="5dp"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
-    android:background="@drawable/board_background">
+    android:background="@drawable/post_background">
 
     <TextView
-        android:id="@+id/board_comment_tvName"
+        android:id="@+id/post_comment_tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="닉네임"
@@ -18,7 +18,7 @@
         android:textSize="10dp"/>
 
     <TextView
-        android:id="@+id/board_comment_tvComment"
+        android:id="@+id/post_comment_tvComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -27,7 +27,7 @@
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/board_comment_tvDate"
+        android:id="@+id/post_comment_tvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"

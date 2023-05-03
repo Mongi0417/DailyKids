@@ -16,10 +16,10 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/dailykids"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/dailykids"
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyKids.NoActionBar">
         <provider
@@ -55,8 +55,9 @@
         <activity android:name=".activities.ProfileActivity"/>
         <activity android:name=".activities.EditProfileActivity"/>
         <activity android:name=".activities.DeleteAccountActivity"/>
-        <activity android:name=".activities.BoardActivity"/>
-        <activity android:name=".activities.BoardContentActivity"/>
+        <activity android:name=".activities.PostActivity"/>
+        <activity android:name=".activities.WritePostActivity"/>
+        <activity android:name=".activities.PostContentActivity"/>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
         <meta-data android:name="com.naver.maps.map.CLIENT_ID"

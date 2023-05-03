@@ -1,6 +1,6 @@
 package com.project.dailykids.models;
 
-public class Board {
+public class Post {
     private String uid;
     private String name;
     private String title;
@@ -8,24 +8,24 @@ public class Board {
     private String comment;
     private String date;
     private String time;
+    private String dateTime;
     private long timestamp;
-    private String boardKey;
+    private String postKey;
     private String commentKey;
 
-    public Board() {
+    public Post() {
     }
 
-    public Board(String uid, String name, String comment, String date, String time, String boardKey, String commentKey) { // 댓글 작성
+    public Post(String uid, String name, String comment, String dateTime, String postKey, String commentKey) { // 댓글 작성
         this.uid = uid;
         this.name = name;
         this.comment = comment;
-        this.date = date;
-        this.time = time;
-        this.boardKey = boardKey;
+        this.dateTime = dateTime;
+        this.postKey = postKey;
         this.commentKey = commentKey;
     }
 
-    public Board(String uid, String name, String title, String content, String date, String time, long timestamp, String boardKey) { // 게시글 작성
+    public Post(String uid, String name, String title, String content, String date, String time, long timestamp, String postKey) { // 게시글 작성
         this.uid = uid;
         this.name = name;
         this.title = title;
@@ -33,7 +33,7 @@ public class Board {
         this.date = date;
         this.time = time;
         this.timestamp = timestamp;
-        this.boardKey = boardKey;
+        this.postKey = postKey;
     }
 
     public String getUid() {
@@ -60,12 +60,16 @@ public class Board {
         return time;
     }
 
+    public String getDateTime() {
+        return dateTime;
+    }
+
     public long getTimestamp() {
         return timestamp;
     }
 
-    public String getBoardKey() {
-        return boardKey;
+    public String getPostKey() {
+        return postKey;
     }
 
     public String getCommentKey() {

@@ -21,19 +21,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.dailykids.R;
-import com.project.dailykids.adapter.BoardAdapter;
-import com.project.dailykids.models.Board;
+import com.project.dailykids.adapter.PostAdapter;
+import com.project.dailykids.models.Post;
 
 import java.util.ArrayList;
 
-public class BoardActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity {
     private View mView;
     private Toolbar toolbar;
     private TextView tvToolbarTitle;
-    private RecyclerView boardView;
-    private Board board;
-    private BoardAdapter boardAdapter;
-    private ArrayList<Board> mList = new ArrayList<>();
+    private RecyclerView postView;
+    private Post post;
+    private PostAdapter postAdapter;
+    private ArrayList<Post> mList = new ArrayList<>();
     private ExtendedFloatingActionButton fabWrite;
     private DatabaseReference mDbRef;
     private String uid = "", nickname = "";
@@ -42,14 +42,14 @@ public class BoardActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.none);
-        setContentView(R.layout.layout_board);
+        setContentView(R.layout.layout_post);
 
         setToolbar();
         initView();
         initData();
-        setButtonToWriteBoard();
+        setButtonToWritePost();
         setItemClickListener();
-        loadBoard();
+        loadPost();
     }
 
     private void setToolbar() {
@@ -63,11 +63,11 @@ public class BoardActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        fabWrite = findViewById(R.id.board_fabWrite);
-        boardView = findViewById(R.id.board_recyclerView);
-        boardAdapter = new BoardAdapter(mList);
-        boardView.setAdapter(boardAdapter);
-        boardView.setLayoutManager(new LinearLayoutManager(this));
+        fabWrite = findViewById(R.id.post_fabWrite);
+        postView = findViewById(R.id.post_recyclerView);
+        postAdapter = new PostAdapter(mList);
+        postView.setAdapter(postAdapter);
+        postView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initData() {
@@ -77,37 +77,37 @@ public class BoardActivity extends AppCompatActivity {
         mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
-    private void setButtonToWriteBoard() {
+    private void setButtonToWritePost() {
         fabWrite.setOnClickListener(view -> {
-            Intent intent = new Intent(BoardActivity.this, WriteBoardActivity.class);
+            Intent intent = new Intent(PostActivity.this, WritePostActivity.class);
             intent.putExtra("nickname", nickname);
             startActivity(intent);
         });
     }
 
     private void setItemClickListener() {
-        boardAdapter.setOnItemClickListener((view, position) -> {
-            Intent intent = new Intent(BoardActivity.this, BoardContentActivity.class);
+        postAdapter.setOnItemClickListener((view, position) -> {
+            Intent intent = new Intent(PostActivity.this, PostContentActivity.class);
             intent.putExtra("nickname", nickname);
             intent.putExtra("writer", mList.get(position).getName());
             intent.putExtra("date", mList.get(position).getDate());
             intent.putExtra("title", mList.get(position).getTitle());
             intent.putExtra("content", mList.get(position).getContent());
             intent.putExtra("time", mList.get(position).getTime());
-            intent.putExtra("boardKey", mList.get(position).getBoardKey());
+            intent.putExtra("postKey", mList.get(position).getPostKey());
         });
     }
 
-    private void loadBoard() {
-        mDbRef.child("Board").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+    private void loadPost() {
+        mDbRef.child("Post").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mList.clear();
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    board = item.getValue(Board.class);
-                    mList.add(board);
+                    post = item.getValue(Post.class);
+                    mList.add(post);
                 }
-                boardAdapter.notifyItemRangeChanged(0, boardAdapter.getItemCount());
+                postAdapter.notifyItemRangeChanged(0, postAdapter.getItemCount());
             }
 
             @Override

@@ -5,20 +5,20 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/board_content_toolbar"
+        android:id="@+id/post_content_toolbar"
         layout="@layout/toolbar"/>
 
     <LinearLayout
-        android:id="@+id/board_content_layout1"
+        android:id="@+id/post_content_layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/board_content_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/post_content_toolbar">
 
         <TextView
-            android:id="@+id/board_content_tvWriter"
+            android:id="@+id/post_content_tvWriter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="작성자"
@@ -26,7 +26,7 @@
             android:textSize="10dp"/>
 
         <TextView
-            android:id="@+id/board_content_tvDate"
+            android:id="@+id/post_content_tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2022년 3월 10일"
@@ -34,15 +34,15 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/board_content_layout2"
+        android:id="@+id/post_content_layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/board_content_layout1">
+        app:layout_constraintTop_toBottomOf="@id/post_content_layout1">
 
         <TextView
-            android:id="@+id/board_content_tvTitle"
+            android:id="@+id/post_content_tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="타이틀"
@@ -51,7 +51,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/board_content_tvContent"
+            android:id="@+id/post_content_tvContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="내용입니다"
@@ -60,22 +60,22 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/board_content_recyclerView"
+        android:id="@+id/post_content_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@id/board_content_layout3"
-        app:layout_constraintTop_toBottomOf="@id/board_content_layout2"/>
+        app:layout_constraintBottom_toTopOf="@id/post_content_layout3"
+        app:layout_constraintTop_toBottomOf="@id/post_content_layout2"/>
 
     <LinearLayout
-        android:id="@+id/board_content_layout3"
+        android:id="@+id/post_content_layout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/yellow_88"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <EditText
-            android:id="@+id/board_content_edtComment"
+            android:id="@+id/post_content_edtComment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -86,7 +86,7 @@
             android:maxLines="4"/>
 
         <Button
-            android:id="@+id/board_content_btnSendComment"
+            android:id="@+id/post_content_btnSendComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"

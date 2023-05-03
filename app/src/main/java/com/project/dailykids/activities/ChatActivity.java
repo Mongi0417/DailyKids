@@ -28,6 +28,8 @@ import com.project.dailykids.adapter.ChatAdapter;
 import com.project.dailykids.models.Chat;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -113,10 +115,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private void setButtonToSendMessage() {
         btnSend.setOnClickListener(view -> {
-            long now = System.currentTimeMillis();
-            Date date = new Date(now);
-            String timeStamp = new SimpleDateFormat("yyyy.MM.dd HH:mm").format(date);
-            chatDTO = new Chat(uid, nickname, edtMessage.getText().toString(), timeStamp);
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String timestamp = localDateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+            chatDTO = new Chat(uid, nickname, edtMessage.getText().toString(), timestamp);
             mRef.child("Chat").push().setValue(chatDTO);
             edtMessage.setText("");
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

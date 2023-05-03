@@ -5,14 +5,14 @@
     android:layout_marginStart="5dp"
     android:layout_marginTop="5dp"
     android:layout_marginEnd="5dp"
-    android:background="@drawable/board_background"
+    android:background="@drawable/post_background"
     android:orientation="vertical"
     android:paddingStart="5dp"
     android:paddingEnd="5dp"
     android:paddingBottom="2dp">
 
     <TextView
-        android:id="@+id/board_tvTitle"
+        android:id="@+id/post_tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -22,7 +22,7 @@
         android:textSize="12sp"/>
 
     <TextView
-        android:id="@+id/board_tvContent"
+        android:id="@+id/post_tvContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/board_tvDate"
+            android:id="@+id/post_tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2023년 -월 -일"
@@ -52,7 +52,7 @@
             android:textSize="11sp"/>
 
         <TextView
-            android:id="@+id/board_tvName"
+            android:id="@+id/post_tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="테스트 계정"

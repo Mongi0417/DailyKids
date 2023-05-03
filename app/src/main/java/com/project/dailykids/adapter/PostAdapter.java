@@ -1,6 +1,5 @@
 package com.project.dailykids.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.dailykids.R;
-import com.project.dailykids.models.Board;
+import com.project.dailykids.models.Post;
 
 import java.util.ArrayList;
 
-public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
-    private ArrayList<Board> mData = new ArrayList<>();
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
+    private ArrayList<Post> mData = new ArrayList<>();
     private OnItemClickListener mListener = null;
 
-    public BoardAdapter(ArrayList<Board> list) {
+    public PostAdapter(ArrayList<Post> list) {
             mData = list;
     }
 
@@ -32,15 +31,15 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @NonNull
     @Override
-    public BoardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_board, parent, false);
+    public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BoardAdapter.ViewHolder holder, int position) {
-        Board item = mData.get(position);
+    public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
+        Post item = mData.get(position);
 
         holder.title.setText(item.getTitle());
         holder.content.setText(item.getContent());
@@ -64,10 +63,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.board_tvTitle);
-            content = itemView.findViewById(R.id.board_tvContent);
-            date = itemView.findViewById(R.id.board_tvDate);
-            name = itemView.findViewById(R.id.board_tvName);
+            title = itemView.findViewById(R.id.post_tvTitle);
+            content = itemView.findViewById(R.id.post_tvContent);
+            date = itemView.findViewById(R.id.post_tvDate);
+            name = itemView.findViewById(R.id.post_tvName);
 
             itemView.setOnClickListener(view -> {
                 int pos = getAdapterPosition();

@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/write_board_toolbar"
+        android:id="@+id/write_post_toolbar"
         layout="@layout/toolbar"/>
 
     <EditText
-        android:id="@+id/board_edtTitle"
+        android:id="@+id/post_edtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -18,10 +18,10 @@
         android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/write_board_toolbar"/>
+        app:layout_constraintTop_toBottomOf="@id/write_post_toolbar"/>
 
     <EditText
-        android:id="@+id/board_edtContent"
+        android:id="@+id/post_edtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -32,15 +32,15 @@
         android:lines="8"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/board_edtTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/post_edtTitle"/>
 
     <Button
-        android:id="@+id/board_btnPost"
+        android:id="@+id/post_btnWrite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:text="등 록"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/board_edtContent"/>
+        app:layout_constraintTop_toBottomOf="@id/post_edtContent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

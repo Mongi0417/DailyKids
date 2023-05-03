@@ -9,7 +9,7 @@
         layout="@layout/toolbar"/>
 
     <EditText
-        android:id="@+id/write_edtTitle"
+        android:id="@+id/notice_edtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@id/write_toolbar"/>
 
     <EditText
-        android:id="@+id/write_edtContent"
+        android:id="@+id/notice_edtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -32,25 +32,25 @@
         android:lines="8"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/write_edtTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/notice_edtTitle"/>
 
     <CheckBox
-        android:id="@+id/write_chkNotice"
+        android:id="@+id/notice_chkNotice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="공지사항"
         android:textColor="@color/red"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/write_edtContent"/>
+        app:layout_constraintTop_toBottomOf="@id/notice_edtContent"/>
 
     <Button
-        android:id="@+id/write_btnPost"
+        android:id="@+id/notice_btnWrite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:text="등 록"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/write_edtContent"/>
+        app:layout_constraintTop_toBottomOf="@id/notice_edtContent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

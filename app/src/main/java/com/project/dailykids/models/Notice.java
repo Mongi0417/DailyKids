@@ -1,16 +1,15 @@
 package com.project.dailykids.models;
 
+import java.text.SimpleDateFormat;
+
 public class Notice {
     private String uid;
     private String name;
     private String title;
     private String content;
-    private String year;
-    private String month;
-    private String date;
-    private String noticeKey;
-    private int notice;
-    private long timestamp;
+    private int isNotice;
+    private long postedTimestamp;
+    private long timestampForSorting;
 
     public String getUid() {
         return uid;
@@ -28,7 +27,27 @@ public class Notice {
         return content;
     }
 
-    public String getYear() {
+    public int getIsNotice() {
+        return isNotice;
+    }
+
+    public long getPostedTimestamp() {
+        return postedTimestamp;
+    }
+
+    public long getTimestampForSorting() {
+        return timestampForSorting;
+    }
+
+    public String postedDateForHomeNotice() {
+        return new SimpleDateFormat("yyyy.MM.dd").format(postedTimestamp);
+    }
+
+    public String postedDateForNotice() {
+        return new SimpleDateFormat("yyyy년 MM월 dd일").format(postedTimestamp);
+    }
+
+    /*public String getYear() {
         return year;
     }
 
@@ -38,37 +57,23 @@ public class Notice {
 
     public String getDate() {
         return date;
-    }
+    }*/
 
-    public String getNoticeKey() {
-        return noticeKey;
-    }
 
-    public int getNotice() {
-        return notice;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public String postedDate() {
+    /*public String postedDate() {
         return year + " " + month + " " + date;
-    }
+    }*/
 
     public Notice() {
     }
 
-    public Notice(String uid, String name, String title, String content, String year, String month, String date, String noticeKey, int notice, long timestamp) {
+    public Notice(String uid, String name, String title, String content, int isNotice, long postedTimestamp, long timestampForSorting) {
         this.uid = uid;
         this.name = name;
         this.title = title;
         this.content = content;
-        this.year = year;
-        this.month = month;
-        this.date = date;
-        this.noticeKey = noticeKey;
-        this.notice = notice;
-        this.timestamp = timestamp;
+        this.isNotice = isNotice;
+        this.postedTimestamp = postedTimestamp;
+        this.timestampForSorting = timestampForSorting;
     }
 }

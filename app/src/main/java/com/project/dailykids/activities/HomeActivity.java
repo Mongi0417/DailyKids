@@ -2,6 +2,7 @@ package com.project.dailykids.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,11 +36,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private View mView;
     private Toolbar toolbar;
     private TextView tvToolbarTitle, tvKinderName, tvNickname, tvNotice[] = new TextView[SIZE_OF_NOTICE], tvDate[] = new TextView[SIZE_OF_NOTICE];
-    private int noticeId[] = {R.id.tvNotice1, R.id.tvNotice2, R.id.tvNotice3, R.id.tvNotice4}, dateId[] = {R.id.tvNoticeDate1, R.id.tvNoticeDate2, R.id.tvNoticeDate3, R.id.tvNoticeDate4};
+    private int noticeId[] = {R.id.home_tvNotice1, R.id.home_tvNotice2, R.id.home_tvNotice3, R.id.home_tvNotice4}, dateId[] = {R.id.home_tvNoticeDate1, R.id.home_tvNoticeDate2, R.id.home_tvNoticeDate3, R.id.home_tvNoticeDate4};
     private DatabaseReference mDbRef;
     private StorageReference mStorageRef;
     private CircleImageView imgProfile;
-    private LinearLayout linearNotice, linearSearch, linearBoard, linearShuttle;
+    private LinearLayout linearNotice, linearSearch, linearPost, linearShuttle;
     private FloatingActionButton fabChat;
     private long waitTime = 0;
     private String uid = "", nickname = "", kinderName = "", who = "";
@@ -78,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         imgProfile = findViewById(R.id.home_imgProfile);
         linearNotice = findViewById(R.id.home_notice);
         linearSearch = findViewById(R.id.home_search);
-        linearBoard = findViewById(R.id.home_board);
+        linearPost = findViewById(R.id.home_post);
         linearShuttle = findViewById(R.id.home_shuttle);
         fabChat = findViewById(R.id.home_fabChat);
     }
@@ -92,23 +93,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void setClickListener() {
         linearShuttle.setOnClickListener(this);
         linearNotice.setOnClickListener(this);
-        linearBoard.setOnClickListener(this);
+        linearPost.setOnClickListener(this);
         linearSearch.setOnClickListener(this);
         fabChat.setOnClickListener(this);
     }
 
     private void loadNotice() {
-        mDbRef.child("Notice").orderByChild("timestamp").limitToFirst(4).addValueEventListener(new ValueEventListener() {
+        mDbRef.child("Notice").orderByChild("timestampForSorting").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int num = 0;
                 for (DataSnapshot item : snapshot.getChildren()) {
                     notice = item.getValue(Notice.class);
-                    if (notice.getNotice() == 1) {
-                        tvNotice[num].setText(notice.getTitle());
-                        tvDate[num].setText(notice.getMonth() + notice.getDate());
+                    if (notice.getIsNotice() == 1) {
+                        tvNotice[0].setText(notice.getTitle());
+                        tvDate[0].setText(notice.postedDateForHomeNotice());
                         num++;
                     }
+                    if (num > 3)
+                        break;
                 }
             }
 
@@ -165,8 +168,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
                 break;
-            case R.id.home_board:
-                intent = new Intent(this, BoardActivity.class);
+            case R.id.home_post:
+                intent = new Intent(this, PostActivity.class);
                 intent.putExtra("who", who);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);

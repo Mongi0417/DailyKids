@@ -5,7 +5,7 @@
     android:layout_marginLeft="5dp"
     android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
-    android:background="@drawable/board_background"
+    android:background="@drawable/post_background"
     android:orientation="vertical"
     android:paddingBottom="2dp">
 

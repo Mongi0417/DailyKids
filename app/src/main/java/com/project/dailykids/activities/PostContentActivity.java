@@ -18,36 +18,37 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.dailykids.R;
-import com.project.dailykids.adapter.BoardCommentAdapter;
-import com.project.dailykids.models.Board;
+import com.project.dailykids.adapter.PostCommentAdapter;
+import com.project.dailykids.models.Post;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class BoardContentActivity extends AppCompatActivity {
+public class PostContentActivity extends AppCompatActivity {
     private View mView;
     private Toolbar toolbar;
     private TextView tvToolbarTitle, tvWriter, tvDate, tvTitle, tvContent;
-    private RecyclerView boardCommentView;
+    private RecyclerView postCommentView;
     private EditText edtComment;
     private Button btnSendComment;
-    private Board board;
-    private BoardCommentAdapter boardCommentAdapter;
-    private ArrayList<Board> mList = new ArrayList<>();
-    private String uid = "", nickname = "", writer = "", date = "", title = "", content = "", time = "", boardKey = "";
+    private Post post;
+    private PostCommentAdapter postCommentAdapter;
+    private ArrayList<Post> mList = new ArrayList<>();
+    private String uid = "", nickname = "", writer = "", date = "", title = "", content = "", time = "", postKey = "";
     private DatabaseReference mDbRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_board_content);
+        setContentView(R.layout.layout_post_content);
         overridePendingTransition(R.anim.fadein, R.anim.none);
 
         setToolbar();
         initView();
         initData();
         setContent();
+        setButtonToWriteComment();
     }
 
     private void setToolbar() {
@@ -61,13 +62,13 @@ public class BoardContentActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        tvWriter = findViewById(R.id.board_content_tvWriter);
-        tvDate = findViewById(R.id.board_content_tvDate);
-        tvTitle = findViewById(R.id.board_content_tvTitle);
-        tvContent = findViewById(R.id.board_content_tvContent);
-        boardCommentView = findViewById(R.id.board_content_recyclerView);
-        edtComment = findViewById(R.id.board_content_edtComment);
-        btnSendComment = findViewById(R.id.board_content_btnSendComment);
+        tvWriter = findViewById(R.id.post_content_tvWriter);
+        tvDate = findViewById(R.id.post_content_tvDate);
+        tvTitle = findViewById(R.id.post_content_tvTitle);
+        tvContent = findViewById(R.id.post_content_tvContent);
+        postCommentView = findViewById(R.id.post_content_recyclerView);
+        edtComment = findViewById(R.id.post_content_edtComment);
+        btnSendComment = findViewById(R.id.post_content_btnSendComment);
     }
 
     private void initData() {
@@ -79,7 +80,7 @@ public class BoardContentActivity extends AppCompatActivity {
         title = intent.getStringExtra("title");
         content = intent.getStringExtra("content");
         time = intent.getStringExtra("time");
-        boardKey = intent.getStringExtra("boardKey");
+        postKey = intent.getStringExtra("postKey");
         mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -90,12 +91,14 @@ public class BoardContentActivity extends AppCompatActivity {
         tvContent.setText(content);
     }
 
-    private void setButtonToSendComment() {
+    private void setButtonToWriteComment() {
         btnSendComment.setOnClickListener(view -> {
-            Date date = new Date(System.currentTimeMillis());
-            String sDate = new SimpleDateFormat("yyyy년 MM월 dd일").format(date);
-            String sTime = new SimpleDateFormat("HH:mm").format(date);
-            String commentKey = mDbRef.child("board-comments").child(boardKey).push().getKey();
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String sDate = localDateTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+            String sTime = localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+            /*String sDate = new SimpleDateFormat("yyyy년 MM월 dd일").format(localDdate);
+            String sTime = new SimpleDateFormat("HH:mm").format(date);*/
+            String commentKey = mDbRef.child("Post-Comments").child(postKey).push().getKey();
         });
     }
 

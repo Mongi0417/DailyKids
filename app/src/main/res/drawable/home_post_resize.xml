@@ -3,5 +3,5 @@
     <item
         android:width="60dp"
         android:height="60dp"
-        android:drawable="@drawable/home_board"/>
+        android:drawable="@drawable/home_post"/>
 </layer-list>

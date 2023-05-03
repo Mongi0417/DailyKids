@@ -189,7 +189,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/home_board"
+        android:id="@+id/home_post"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -201,7 +201,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/home_board_resize"/>
+            android:src="@drawable/home_post_resize"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -289,7 +289,7 @@
             android:layout_marginBottom="5dp">
 
             <TextView
-                android:id="@+id/tvNotice1"
+                android:id="@+id/home_tvNotice1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -300,7 +300,7 @@
                 android:textSize="20dp"/>
 
             <TextView
-                android:id="@+id/tvNoticeDate1"
+                android:id="@+id/home_tvNoticeDate1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -316,7 +316,7 @@
             android:layout_marginBottom="5dp">
 
             <TextView
-                android:id="@+id/tvNotice2"
+                android:id="@+id/home_tvNotice2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -327,7 +327,7 @@
                 android:textSize="20dp"/>
 
             <TextView
-                android:id="@+id/tvNoticeDate2"
+                android:id="@+id/home_tvNoticeDate2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -342,7 +342,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvNotice3"
+                android:id="@+id/home_tvNotice3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -353,7 +353,7 @@
                 android:textSize="20dp"/>
 
             <TextView
-                android:id="@+id/tvNoticeDate3"
+                android:id="@+id/home_tvNoticeDate3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -368,7 +368,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tvNotice4"
+                android:id="@+id/home_tvNotice4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -379,7 +379,7 @@
                 android:textSize="20dp"/>
 
             <TextView
-                android:id="@+id/tvNoticeDate4"
+                android:id="@+id/home_tvNoticeDate4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

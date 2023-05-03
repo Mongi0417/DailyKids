@@ -9,28 +9,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.dailykids.R;
-import com.project.dailykids.models.Board;
+import com.project.dailykids.models.Post;
 
 import java.util.ArrayList;
 
-public class BoardCommentAdapter extends RecyclerView.Adapter<BoardCommentAdapter.ViewHolder> {
-    private ArrayList<Board> mData;
+public class PostCommentAdapter extends RecyclerView.Adapter<PostCommentAdapter.ViewHolder> {
+    private ArrayList<Post> mData;
 
-    public BoardCommentAdapter(ArrayList<Board> list) {
+    public PostCommentAdapter(ArrayList<Post> list) {
         mData = list;
     }
 
     @NonNull
     @Override
-    public BoardCommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_board_comment, parent, false);
+    public PostCommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_comment, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BoardCommentAdapter.ViewHolder holder, int position) {
-        Board item = mData.get(position);
+    public void onBindViewHolder(@NonNull PostCommentAdapter.ViewHolder holder, int position) {
+        Post item = mData.get(position);
 
         holder.comment.setText(item.getComment());
         holder.date.setText(item.getDate() + " " + item.getTime());
@@ -55,9 +55,9 @@ public class BoardCommentAdapter extends RecyclerView.Adapter<BoardCommentAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.board_comment_tvName);
-            comment = itemView.findViewById(R.id.board_comment_tvComment);
-            date = itemView.findViewById(R.id.board_comment_tvDate);
+            name = itemView.findViewById(R.id.post_comment_tvName);
+            comment = itemView.findViewById(R.id.post_comment_tvComment);
+            date = itemView.findViewById(R.id.post_comment_tvDate);
         }
     }
 }
