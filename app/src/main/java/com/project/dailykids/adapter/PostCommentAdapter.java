@@ -33,7 +33,7 @@ public class PostCommentAdapter extends RecyclerView.Adapter<PostCommentAdapter.
         Post item = mData.get(position);
 
         holder.comment.setText(item.getComment());
-        holder.date.setText(item.getDate() + " " + item.getTime());
+        holder.date.setText(item.postedDateAndTimeForComment());
         holder.name.setText(item.getName());
     }
 

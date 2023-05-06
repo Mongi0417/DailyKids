@@ -39,30 +39,9 @@ public class Notice {
         return timestampForSorting;
     }
 
-    public String postedDateForHomeNotice() {
-        return new SimpleDateFormat("yyyy.MM.dd").format(postedTimestamp);
-    }
+    public String postedDateForHomeNotice() { return new SimpleDateFormat("yyyy.MM.dd").format(postedTimestamp); }
 
-    public String postedDateForNotice() {
-        return new SimpleDateFormat("yyyy년 MM월 dd일").format(postedTimestamp);
-    }
-
-    /*public String getYear() {
-        return year;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public String getDate() {
-        return date;
-    }*/
-
-
-    /*public String postedDate() {
-        return year + " " + month + " " + date;
-    }*/
+    public String postedDateForNotice() { return new SimpleDateFormat("yyyy년 MM월 dd일").format(postedTimestamp); }
 
     public Notice() {
     }

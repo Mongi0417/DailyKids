@@ -1,5 +1,6 @@
 package com.project.dailykids.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.dailykids.R;
+import com.project.dailykids.activities.PostActivity;
 import com.project.dailykids.models.Post;
 
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         holder.title.setText(item.getTitle());
         holder.content.setText(item.getContent());
-        holder.date.setText(item.getDate());
+        holder.date.setText(item.postedDateForPost());
         holder.name.setText(item.getName());
     }
 

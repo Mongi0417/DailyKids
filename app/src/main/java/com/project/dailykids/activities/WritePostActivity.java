@@ -48,7 +48,7 @@ public class WritePostActivity extends AppCompatActivity {
     }
 
     private void setToolbar() {
-        mView = findViewById(R.id.home_toolbar);
+        mView = findViewById(R.id.write_post_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("학부모 게시판");
@@ -71,15 +71,14 @@ public class WritePostActivity extends AppCompatActivity {
 
     private void setButtonToWritePost() {
         btnWrite.setOnClickListener(view -> {
-            LocalDateTime localDateTime = LocalDateTime.now();
+            long now = System.currentTimeMillis();
+            long timestampForSorting = now / 1000;
+            /*LocalDateTime localDateTime = LocalDateTime.now();
             String sDate = localDateTime.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
-            String sTime = localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-            int timestamp = localDateTime.getNano();
+            String sTime = localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));*/
             String postKey = mDbRef.child("Post").push().getKey();
-            post = new Post(uid, nickname, edtTitle.getText().toString(), edtContent.getText().toString(), sDate, sTime, -timestamp, postKey);
+            post = new Post(uid, nickname, edtTitle.getText().toString(), edtContent.getText().toString(), now, -timestampForSorting, postKey);
             mDbRef.child("Post").child(postKey).setValue(post);
-            edtTitle.setText("");
-            edtContent.setText("");
             Toast.makeText(WritePostActivity.this, "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
         });
@@ -87,11 +86,9 @@ public class WritePostActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.none, R.anim.fadeout);
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.none, R.anim.fadeout);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -49,7 +49,7 @@ public class WriteNoticeActivity extends AppCompatActivity {
     }
 
     private void setToolbar() {
-        mView = findViewById(R.id.write_toolbar);
+        mView = findViewById(R.id.write_notice_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("알림장 작성");

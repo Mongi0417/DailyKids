@@ -3,6 +3,7 @@ package com.project.dailykids.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -106,8 +107,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 for (DataSnapshot item : snapshot.getChildren()) {
                     notice = item.getValue(Notice.class);
                     if (notice.getIsNotice() == 1) {
-                        tvNotice[0].setText(notice.getTitle());
-                        tvDate[0].setText(notice.postedDateForHomeNotice());
+                        tvNotice[num].setText(notice.getTitle());
+                        tvDate[num].setText(notice.postedDateForHomeNotice());
                         num++;
                     }
                     if (num > 3)

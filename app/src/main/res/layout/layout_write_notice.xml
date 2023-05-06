@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/write_toolbar"
+        android:id="@+id/write_notice_toolbar"
         layout="@layout/toolbar"/>
 
     <EditText
@@ -18,7 +18,7 @@
         android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/write_toolbar"/>
+        app:layout_constraintTop_toBottomOf="@id/write_notice_toolbar"/>
 
     <EditText
         android:id="@+id/notice_edtContent"

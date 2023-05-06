@@ -53,7 +53,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void setToolbar() {
-        mView = findViewById(R.id.home_toolbar);
+        mView = findViewById(R.id.post_toolbar);
         toolbar = mView.findViewById(R.id.toolbar);
         tvToolbarTitle = mView.findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("학부모 게시판");
@@ -90,11 +90,11 @@ public class PostActivity extends AppCompatActivity {
             Intent intent = new Intent(PostActivity.this, PostContentActivity.class);
             intent.putExtra("nickname", nickname);
             intent.putExtra("writer", mList.get(position).getName());
-            intent.putExtra("date", mList.get(position).getDate());
             intent.putExtra("title", mList.get(position).getTitle());
             intent.putExtra("content", mList.get(position).getContent());
-            intent.putExtra("time", mList.get(position).getTime());
+            intent.putExtra("postedDateAndTime", mList.get(position).postedDateAndTimeForComment());
             intent.putExtra("postKey", mList.get(position).getPostKey());
+            startActivity(intent);
         });
     }
 

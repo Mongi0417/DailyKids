@@ -27,11 +27,9 @@ import com.project.dailykids.R;
 import com.project.dailykids.adapter.ChatAdapter;
 import com.project.dailykids.models.Chat;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ChatActivity extends AppCompatActivity {
     private View mView;
@@ -41,9 +39,9 @@ public class ChatActivity extends AppCompatActivity {
     private EditText edtMessage;
     private Button btnSend;
     private RecyclerView chatView;
-    private Chat chatDTO;
+    private Chat chat;
     private ChatAdapter chatAdapter;
-    private DatabaseReference mRef;
+    private DatabaseReference mDbRef;
     private String uid, nickname;
 
     @Override
@@ -79,15 +77,15 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         nickname = intent.getStringExtra("nickname");
         uid = FirebaseAuth.getInstance().getUid();
-        mRef = FirebaseDatabase.getInstance().getReference();
+        mDbRef = FirebaseDatabase.getInstance().getReference();
     }
 
     private void loadChatData() {
-        mRef.child("Chat").addChildEventListener(new ChildEventListener() {
+        mDbRef.child("Chat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                chatDTO = snapshot.getValue(Chat.class);
-                chatList.add(chatDTO);
+                chat = snapshot.getValue(Chat.class);
+                chatList.add(chat);
                 chatAdapter.notifyDataSetChanged();
                 chatView.scrollToPosition(chatList.size() - 1);
             }
@@ -117,8 +115,8 @@ public class ChatActivity extends AppCompatActivity {
         btnSend.setOnClickListener(view -> {
             LocalDateTime localDateTime = LocalDateTime.now();
             String timestamp = localDateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-            chatDTO = new Chat(uid, nickname, edtMessage.getText().toString(), timestamp);
-            mRef.child("Chat").push().setValue(chatDTO);
+            chat = new Chat(uid, nickname, edtMessage.getText().toString(), timestamp);
+            mDbRef.child("Chat").push().setValue(chat);
             edtMessage.setText("");
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
