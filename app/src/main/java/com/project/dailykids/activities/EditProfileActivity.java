@@ -208,7 +208,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 Toast.makeText(this, "비밀번호가 재설정되었습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show();
                 finishAffinity();
                 Intent intent = new Intent(this, LoginActivity.class);
-                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -266,7 +265,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         });
         finishAffinity();
         Intent intent = new Intent(this, HomeActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
