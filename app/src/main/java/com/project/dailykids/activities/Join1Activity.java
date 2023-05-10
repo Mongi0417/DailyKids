@@ -261,15 +261,14 @@ public class Join1Activity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         switch (view.getId()) {
             case R.id.join1_btnCheckEmail:
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 checkEmailAddressFormat();
                 if (isEmailAddressFormat)
                     checkDuplicatedEmailAddress();
                 break;
             case R.id.join1_btnCheckNickname:
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 checkNicknameLength();
                 if (isProperLengthForNickname)
                     checkDuplicatedNickname();

@@ -48,7 +48,7 @@ public class Join2Activity extends AppCompatActivity {
     private String userEmail = "", userPassword = "", userNickname = "", userWho = "";
     private CircleImageView imgProfile;
     private Button btnUploadImg, btnJoin;
-    private Uri photoUri, cropUri;
+    private Uri photoUri = null, cropUri = null;
     private File tempFile;
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
