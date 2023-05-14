@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.dailykids.R;
 import com.project.dailykids.models.Notice;
+import com.project.dailykids.utils.TimestampConverter;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
         holder.title.setText(item.getTitle());
         holder.content.setText(item.getContent());
-        holder.date.setText(item.postedDateForNotice());
+        holder.date.setText(TimestampConverter.timestampToDate(item.getTimestamp()));
         if (item.getIsNotice() == 1)
             holder.notice.setVisibility(View.VISIBLE);
     }

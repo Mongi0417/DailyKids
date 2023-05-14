@@ -26,27 +26,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.project.dailykids.R;
 import com.project.dailykids.adapter.PostCommentAdapter;
-import com.project.dailykids.models.Post;
+import com.project.dailykids.models.Comment;
 
 import java.util.ArrayList;
 
-public class PostContentActivity extends AppCompatActivity {
+public class PostCommentActivity extends AppCompatActivity {
     private View mView;
     private Toolbar toolbar;
     private TextView tvToolbarTitle, tvWriter, tvDate, tvTitle, tvContent;
     private RecyclerView postCommentView;
     private EditText edtComment;
     private Button btnSendComment;
-    private Post post;
+    private Comment comment;
     private PostCommentAdapter postCommentAdapter;
-    private ArrayList<Post> mList = new ArrayList<>();
+    private ArrayList<Comment> mList = new ArrayList<>();
     private String uid = "", nickname = "", writer = "", title = "", content = "", postedDateAndTime = "", postKey = "";
     private DatabaseReference mDbRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_post_content);
+        setContentView(R.layout.layout_post_comment);
         overridePendingTransition(R.anim.fadein, R.anim.none);
 
         setToolbar();
@@ -103,12 +103,12 @@ public class PostContentActivity extends AppCompatActivity {
         btnSendComment.setOnClickListener(view -> {
             long now = System.currentTimeMillis();
             String commentKey = mDbRef.child("Post-Comments").child(postKey).push().getKey();
-            post = new Post(uid, nickname, edtComment.getText().toString(), now, postKey, commentKey);
-            mDbRef.child("Post-Comments").child(postKey).child(commentKey).setValue(post);
+            comment = new Comment(uid, nickname, edtComment.getText().toString(), now, postKey, commentKey);
+            mDbRef.child("Post-Comments").child(postKey).child(commentKey).setValue(comment);
             edtComment.setText("");
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            Toast.makeText(PostContentActivity.this, "댓글 등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PostCommentActivity.this, "댓글 등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -116,8 +116,8 @@ public class PostContentActivity extends AppCompatActivity {
         mDbRef.child("Post-Comments").child(postKey).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                post = snapshot.getValue(Post.class);
-                mList.add(post);
+                comment = snapshot.getValue(Comment.class);
+                mList.add(comment);
                 postCommentAdapter.notifyDataSetChanged();
             }
 

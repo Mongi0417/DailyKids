@@ -9,14 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.dailykids.R;
-import com.project.dailykids.models.Post;
+import com.project.dailykids.models.Comment;
+import com.project.dailykids.utils.TimestampConverter;
 
 import java.util.ArrayList;
 
 public class PostCommentAdapter extends RecyclerView.Adapter<PostCommentAdapter.ViewHolder> {
-    private ArrayList<Post> mData;
+    private ArrayList<Comment> mData;
 
-    public PostCommentAdapter(ArrayList<Post> list) {
+    public PostCommentAdapter(ArrayList<Comment> list) {
         mData = list;
     }
 
@@ -30,11 +31,11 @@ public class PostCommentAdapter extends RecyclerView.Adapter<PostCommentAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull PostCommentAdapter.ViewHolder holder, int position) {
-        Post item = mData.get(position);
+        Comment item = mData.get(position);
 
         holder.comment.setText(item.getComment());
-        holder.date.setText(item.postedDateAndTimeForComment());
-        holder.name.setText(item.getName());
+        holder.date.setText(TimestampConverter.timestampToDateAndTime(item.getTimestamp()));
+        holder.name.setText(item.getNickname());
     }
 
     @Override

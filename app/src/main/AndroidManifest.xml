@@ -57,7 +57,7 @@
         <activity android:name=".activities.DeleteAccountActivity"/>
         <activity android:name=".activities.PostActivity"/>
         <activity android:name=".activities.WritePostActivity"/>
-        <activity android:name=".activities.PostContentActivity"/>
+        <activity android:name=".activities.PostCommentActivity"/>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
         <meta-data android:name="com.naver.maps.map.CLIENT_ID"

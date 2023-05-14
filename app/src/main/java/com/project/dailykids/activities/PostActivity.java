@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.dailykids.R;
 import com.project.dailykids.adapter.PostAdapter;
 import com.project.dailykids.models.Post;
+import com.project.dailykids.utils.TimestampConverter;
 
 import java.util.ArrayList;
 
@@ -87,19 +88,19 @@ public class PostActivity extends AppCompatActivity {
 
     private void setItemClickListener() {
         postAdapter.setOnItemClickListener((view, position) -> {
-            Intent intent = new Intent(PostActivity.this, PostContentActivity.class);
+            Intent intent = new Intent(PostActivity.this, PostCommentActivity.class);
             intent.putExtra("nickname", nickname);
             intent.putExtra("writer", mList.get(position).getName());
             intent.putExtra("title", mList.get(position).getTitle());
             intent.putExtra("content", mList.get(position).getContent());
-            intent.putExtra("postedDateAndTime", mList.get(position).postedDateAndTimeForComment());
+            intent.putExtra("postedDateAndTime", TimestampConverter.timestampToDateAndTime(mList.get(position).getTimestamp()));
             intent.putExtra("postKey", mList.get(position).getPostKey());
             startActivity(intent);
         });
     }
 
     private void loadPost() {
-        mDbRef.child("Post").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        mDbRef.child("Post").orderByChild("timestampForSorting").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mList.clear();

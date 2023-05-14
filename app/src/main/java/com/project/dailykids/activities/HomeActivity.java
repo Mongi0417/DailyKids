@@ -2,6 +2,7 @@ package com.project.dailykids.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import com.project.dailykids.R;
 import com.project.dailykids.models.Notice;
 import com.project.dailykids.models.User;
+import com.project.dailykids.utils.TimestampConverter;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -107,7 +109,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     notice = item.getValue(Notice.class);
                     if (notice.getIsNotice() == 1) {
                         tvNotice[num].setText(notice.getTitle());
-                        tvDate[num].setText(notice.postedDateForHomeNotice());
+                        Log.d("TAG", String.valueOf(notice.getTimestamp()));
+                        tvDate[num].setText(TimestampConverter.timestampToDateWithDot(notice.getTimestamp()));
                         num++;
                     }
                     if (num > 3)

@@ -1,14 +1,12 @@
 package com.project.dailykids.models;
 
-import java.text.SimpleDateFormat;
-
 public class Notice {
     private String uid;
     private String name;
     private String title;
     private String content;
     private int isNotice;
-    private long postedTimestamp;
+    private long timestamp;
     private long timestampForSorting;
 
     public String getUid() {
@@ -31,28 +29,24 @@ public class Notice {
         return isNotice;
     }
 
-    public long getPostedTimestamp() {
-        return postedTimestamp;
+    public long getTimestamp() {
+        return timestamp;
     }
 
     public long getTimestampForSorting() {
         return timestampForSorting;
     }
 
-    public String postedDateForHomeNotice() { return new SimpleDateFormat("yyyy.MM.dd").format(postedTimestamp); }
-
-    public String postedDateForNotice() { return new SimpleDateFormat("yyyy년 MM월 dd일").format(postedTimestamp); }
-
     public Notice() {
     }
 
-    public Notice(String uid, String name, String title, String content, int isNotice, long postedTimestamp, long timestampForSorting) {
+    public Notice(String uid, String name, String title, String content, int isNotice, long timestamp, long timestampForSorting) {
         this.uid = uid;
         this.name = name;
         this.title = title;
         this.content = content;
         this.isNotice = isNotice;
-        this.postedTimestamp = postedTimestamp;
+        this.timestamp = timestamp;
         this.timestampForSorting = timestampForSorting;
     }
 }
