@@ -195,29 +195,31 @@ public class Join2Activity extends AppCompatActivity {
     }
 
     private void createUser(String email, String password, String nickname, String who, Uri cropUri) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                String uid = task.getResult().getUser().getUid();
-                String simpleDTOKey = mRef.child("SimpleUserData").push().getKey();
-                String kinderName = "";
-                User user = new User(uid, email, nickname, who, kinderName, simpleDTOKey);
-                UserSimple userSimple = new UserSimple(email, nickname);
-                mRef.child("SimpleUserData").child(simpleDTOKey).setValue(userSimple);
-                mRef.child("UserData").child(uid).setValue(user);
-                mStorageRef.child("profile_img/").child(uid + ".jpg").putFile(cropUri);
-                tempFile.delete();
-                finishAffinity();
-                Intent intent = new Intent(Join2Activity.this, LoginActivity.class);
-                startActivity(intent);
-            } else {
-                try {
-                    throw task.getException();
-                } catch (Exception e) {
-                    Toast.makeText(this, "계정을 다시 확인해 주세요", Toast.LENGTH_SHORT).show();
-                    finish();
+        if (cropUri != null) {
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    String uid = task.getResult().getUser().getUid();
+                    String simpleDTOKey = mRef.child("SimpleUserData").push().getKey();
+                    String kinderName = "";
+                    User user = new User(uid, email, nickname, who, kinderName, simpleDTOKey);
+                    UserSimple userSimple = new UserSimple(email, nickname);
+                    mRef.child("SimpleUserData").child(simpleDTOKey).setValue(userSimple);
+                    mRef.child("UserData").child(uid).setValue(user);
+                    mStorageRef.child("profile_img/").child(uid + ".jpg").putFile(cropUri);
+                    tempFile.delete();
+                    finishAffinity();
+                    Intent intent = new Intent(Join2Activity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    try {
+                        throw task.getException();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "계정을 다시 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
-            }
-        }).addOnFailureListener(e -> e.printStackTrace());
+            }).addOnFailureListener(e -> e.printStackTrace());
+        }
     }
 
     @Override

@@ -8,6 +8,9 @@ public class Comment {
     private String postKey;
     private String commentKey;
 
+    public Comment() {
+    }
+
     public Comment(String uid, String nickname, String comment, long timestamp, String postKey, String commentKey) {
         this.uid = uid;
         this.nickname = nickname;
