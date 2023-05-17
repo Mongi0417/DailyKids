@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.dailykids.R;
-import com.project.dailykids.utils.TimestampConverter;
 import com.project.dailykids.models.Post;
+import com.project.dailykids.utils.TimestampConverter;
 
 import java.util.ArrayList;
 

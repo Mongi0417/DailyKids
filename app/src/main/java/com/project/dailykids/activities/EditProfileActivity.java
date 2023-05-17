@@ -30,8 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.dailykids.R;
-import com.project.dailykids.models.UserSimple;
 import com.project.dailykids.models.User;
+import com.project.dailykids.models.UserSimple;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +44,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private Button btnChangePassword, btnChangeName;
     private boolean isLongPassword, isSamePassword, isProperLengthForNickname, isAvailableNickname;
     private String uid;
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

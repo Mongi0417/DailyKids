@@ -121,13 +121,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.profile_imgProfile:ImageTedPermission imgTedPermission = new ImageTedPermission(this);
+            case R.id.profile_imgProfile:
+                ImageTedPermission imgTedPermission = new ImageTedPermission(this);
                 imgTedPermission.tedPermission();
                 DialogInterface.OnClickListener cameraListener = (dialogInterface, i) -> takePhoto();
                 DialogInterface.OnClickListener albumListener = (dialogInterface, i) -> goToAlbum();
                 DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> dialogInterface.dismiss();
-                new AlertDialog.Builder(ProfileActivity.this).setTitle("업로드할 이미지 선택").setPositiveButton("앨범 선택", albumListener)
-                        .setNeutralButton("취소", cancelListener).setNegativeButton("사진 촬영", cameraListener).show();
+                new AlertDialog.Builder(ProfileActivity.this).setTitle("업로드할 이미지 선택").setPositiveButton("앨범 선택", albumListener).setNeutralButton("취소", cancelListener).setNegativeButton("사진 촬영", cameraListener).show();
                 break;
             case R.id.profile_btnEditProfile:
                 startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));

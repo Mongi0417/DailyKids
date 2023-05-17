@@ -10,10 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.project.dailykids.utils.GetJsonObject;
-import com.project.dailykids.activities.KinderInformationActivity;
 import com.project.dailykids.R;
+import com.project.dailykids.activities.KinderInformationActivity;
 import com.project.dailykids.models.KinderInfo;
+import com.project.dailykids.utils.GetJsonObject;
 
 import org.json.JSONObject;
 

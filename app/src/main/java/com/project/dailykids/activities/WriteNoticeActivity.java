@@ -20,11 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.project.dailykids.R;
 import com.project.dailykids.models.Notice;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-
 public class WriteNoticeActivity extends AppCompatActivity {
     private View mView;
     private Toolbar toolbar;
