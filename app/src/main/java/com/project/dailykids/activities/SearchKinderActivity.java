@@ -51,7 +51,7 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
     private SearchKinderAdapter searchKinderAdapter;
     private ArrayList<KinderInfo> mList = new ArrayList<>();
     private ArrayList<KinderInfo> mSearchList = new ArrayList<>();
-    private DatabaseReference mDbRef;
+    //private DatabaseReference mDbRef;
     private String sidoCode;
     private String sggCode;
     private String kinderName, kinderAddress, kinderTel;
@@ -102,7 +102,7 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
         nickname = intent.getStringExtra("nickname");
         who = intent.getStringExtra("who");
         uid = FirebaseAuth.getInstance().getUid();
-        mDbRef = FirebaseDatabase.getInstance().getReference();
+        //mDbRef = FirebaseDatabase.getInstance().getReference();
         arraySido = getResources().getStringArray(R.array.array_sido);
         arraySidoCode = getResources().getStringArray(R.array.array_sidoCode);
         dlg = new AlertDialog.Builder(this);
@@ -227,37 +227,39 @@ public class SearchKinderActivity extends AppCompatActivity implements GetJsonOb
 
     private void setButtonToSearchKinder() {
         typeLinear.setVisibility(View.VISIBLE);
-        mList.clear();
         loadKinderInformation();
     }
 
     private void loadKinderInformation() {
-        try {
-            URL url = new URL(SCHOOL_URL + API_KEY + sidoCode + sggCode);
-            InputStream is = url.openStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuffer buffer = new StringBuffer();
-            String line = br.readLine();
-            while (line != null) {
-                buffer.append(line + "\n");
-                line = br.readLine();
+        new Thread(() -> {
+            mList.clear();
+            try {
+                URL url = new URL(SCHOOL_URL + API_KEY + sidoCode + sggCode);
+                InputStream is = url.openStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                StringBuffer buffer = new StringBuffer();
+                String line = br.readLine();
+                while (line != null) {
+                    buffer.append(line + "\n");
+                    line = br.readLine();
+                }
+                String jsonData = buffer.toString();
+                obj = new JSONObject(jsonData);
+                JSONArray kinderArray = obj.getJSONArray("kinderInfo");
+                for (int i = 0; i < kinderArray.length(); i++) {
+                    JSONObject kinderObj = kinderArray.getJSONObject(i);
+                    kinderName = kinderObj.getString("kindername");
+                    kinderAddress = kinderObj.getString("addr");
+                    kinderTel = kinderObj.getString("telno");
+                    kinderInfo = new KinderInfo(kinderName, kinderAddress, kinderTel);
+                    mList.add(kinderInfo);
+                }
+                searchKinderAdapter.setItems(mList);
+                runOnUiThread(() -> searchKinderAdapter.notifyDataSetChanged());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            String jsonData = buffer.toString();
-            obj = new JSONObject(jsonData);
-            JSONArray kinderArray = obj.getJSONArray("kinderInfo");
-            for (int i = 0; i < kinderArray.length(); i++) {
-                JSONObject kinderObj = kinderArray.getJSONObject(i);
-                kinderName = kinderObj.getString("kindername");
-                kinderAddress = kinderObj.getString("addr");
-                kinderTel = kinderObj.getString("telno");
-                kinderInfo = new KinderInfo(kinderName, kinderAddress, kinderTel);
-                mList.add(kinderInfo);
-            }
-            searchKinderAdapter.setItems(mList);
-            searchKinderAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     private void setButtonToSearchKinderByName() {
