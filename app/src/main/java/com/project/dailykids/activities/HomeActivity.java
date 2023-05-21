@@ -49,6 +49,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("TAG", "onCreate");
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.none);
         setContentView(R.layout.layout_home);
@@ -108,7 +109,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     notice = item.getValue(Notice.class);
                     if (notice.getIsNotice() == 1) {
                         tvNotice[num].setText(notice.getTitle());
-                        Log.d("TAG", String.valueOf(notice.getTimestamp()));
                         tvDate[num].setText(TimestampConverter.timestampToDateWithDot(notice.getTimestamp()));
                         num++;
                     }
@@ -203,5 +203,35 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d("TAG", "onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("TAG", "onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("TAG", "onDestroy");
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("TAG", "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d("TAG", "onResume");
+        super.onResume();
     }
 }
