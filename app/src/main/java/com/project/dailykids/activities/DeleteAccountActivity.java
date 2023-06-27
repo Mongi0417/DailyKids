@@ -152,7 +152,7 @@ public class DeleteAccountActivity extends AppCompatActivity implements View.OnC
         if (user != null) {
             mDbRef.child("SimpleUserData").child(simpleDTOKey).removeValue().addOnCompleteListener(task -> {
                if (task.isSuccessful())
-                   Log.d("TAG", "계정 삭제 완료");
+                   Log.d("TAG", "Simple 계정 삭제 완료");
             });
             mDbRef.child("UserData").child(uid).removeValue().addOnCompleteListener(task -> {
                 if (task.isSuccessful())

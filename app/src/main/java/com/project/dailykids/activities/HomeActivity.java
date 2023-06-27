@@ -58,8 +58,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         setClickListener();
-        loadProfile();
         loadNotice();
+        new Thread(() -> runOnUiThread(() -> {
+            loadProfile();
+        })).start();
     }
 
     private void setToolbar() {

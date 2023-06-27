@@ -188,8 +188,8 @@ public class KinderInformationActivity extends AppCompatActivity implements OnMa
 
     private void requestGeocode() {
         try {
-            BufferedReader bufferedReader;
-            StringBuilder stringBuilder = new StringBuilder();
+            BufferedReader br;
+            StringBuilder builder = new StringBuilder();
             String query = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + URLEncoder.encode(addr, "UTF-8");
             URL url = new URL(query);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -202,25 +202,25 @@ public class KinderInformationActivity extends AppCompatActivity implements OnMa
                 int responseCode = conn.getResponseCode();
 
                 if (responseCode == 200)
-                    bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 else
-                    bufferedReader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                    br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 
                 String line = null;
-                while ((line = bufferedReader.readLine()) != null)
-                    stringBuilder.append(line + "\n");
+                while ((line = br.readLine()) != null)
+                    builder.append(line + "\n");
 
                 int indexFirst, indexLast;
 
-                indexFirst = stringBuilder.indexOf("\"x\":\"");
-                indexLast = stringBuilder.indexOf("\",\"y\":");
-                longitude = stringBuilder.substring(indexFirst + 5, indexLast);
+                indexFirst = builder.indexOf("\"x\":\"");
+                indexLast = builder.indexOf("\",\"y\":");
+                longitude = builder.substring(indexFirst + 5, indexLast);
 
-                indexFirst = stringBuilder.indexOf("\"y\":\"");
-                indexLast = stringBuilder.indexOf("\",\"distance\":");
-                latitude = stringBuilder.substring(indexFirst + 5, indexLast);
+                indexFirst = builder.indexOf("\"y\":\"");
+                indexLast = builder.indexOf("\",\"distance\":");
+                latitude = builder.substring(indexFirst + 5, indexLast);
 
-                bufferedReader.close();
+                br.close();
                 conn.disconnect();
             }
         } catch (Exception e) {

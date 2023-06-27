@@ -215,25 +215,24 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void checkAboutNickname(String newNickname) { // 닉네임 길이 및 변경 희망 닉네임 중복 여부 확인
         if (TextUtils.isEmpty(newNickname))
-            Toast.makeText(this, "새로운 닉네임을 입력해 주세요,", Toast.LENGTH_SHORT).show();
+            tvNewNickname.setText("새로운 닉네임을 입력해 주세요.");
         else if (!isProperLengthForNickname)
-            Toast.makeText(this, "닉네임의 길이를 확인해 주세요.", Toast.LENGTH_SHORT).show();
+            tvNewNickname.setText("닉네임의 길이를 확인해 주세요.");
         else {
             DatabaseReference mDbRef = FirebaseDatabase.getInstance().getReference();
             mDbRef.child("SimpleUserData").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    isAvailableNickname = true;
                     for (DataSnapshot item : snapshot.getChildren()) {
                         UserSimple userSimple = item.getValue(UserSimple.class);
                         String name = userSimple.getNickname();
                         if (name.equals(newNickname)) {
                             isAvailableNickname = false;
-                            tvNewNickname.setTextColor(Color.RED);
-                            tvNewNickname.setText("이미 존재하는 이름입니다.");
+                            tvNewNickname.setText("이미 존재하는 닉네임입니다.");
                             break;
                         }
                     }
+                    isAvailableNickname = true;
                 }
 
                 @Override
@@ -241,7 +240,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 }
             });
             if (isAvailableNickname) {
-                tvNewNickname.setText("");
                 changeNickname(uid, newNickname, mDbRef);
             }
         }
@@ -264,7 +262,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
         });
         finishAffinity();
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
         startActivity(intent);
     }
 

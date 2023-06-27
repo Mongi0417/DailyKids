@@ -37,7 +37,7 @@ import com.project.dailykids.models.Shuttle;
 public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     private static final int PERMISSION_REQUEST_CODE = 1000;
     private static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    private NaverMap naverMap;
+    private NaverMap mNaverMap;
     private Marker marker;
     private View mView;
     private Toolbar toolbar;
@@ -64,8 +64,8 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
         setMapFragment();
 
         if (who.equals("교사")) {
-            setClickListener();
             setFabButtonVisibility();
+            setClickListener();
         }
     }
 
@@ -118,9 +118,9 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-        this.naverMap = naverMap;
-        naverMap.setLocationSource(fusedLocationSource);
-        UiSettings uiSettings = naverMap.getUiSettings();
+        mNaverMap = naverMap;
+        mNaverMap.setLocationSource(fusedLocationSource);
+        UiSettings uiSettings = mNaverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
         ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
 
@@ -146,7 +146,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
                 tvRunState.setText(getRunState);
                 if (getLatitude != 0 && getLongitude != 0) {
                     marker.setPosition(new LatLng(getLatitude, getLongitude));
-                    marker.setMap(naverMap);
+                    marker.setMap(mNaverMap);
                 }
             }
 
@@ -157,7 +157,7 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     private void saveLocationByDriver() {
-        naverMap.addOnLocationChangeListener(location -> {
+        mNaverMap.addOnLocationChangeListener(location -> {
             if (shareState) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
@@ -173,9 +173,9 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (fusedLocationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             if (!fusedLocationSource.isActivated())
-                naverMap.setLocationTrackingMode(LocationTrackingMode.None);
-            else naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
-            return;
+                mNaverMap.setLocationTrackingMode(LocationTrackingMode.None);
+            else
+                mNaverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
         }
     }
 
@@ -205,8 +205,9 @@ public class ShuttleActivity extends AppCompatActivity implements OnMapReadyCall
             case R.id.shuttle_fabStart:
                 toggleFab();
                 Toast.makeText(ShuttleActivity.this, "운행을 시작합니다.", Toast.LENGTH_SHORT).show();
-                runState = "운행 중";
                 shareState = true;
+                runState = "운행 중";
+                tvRunState.setText(runState);
                 break;
             case R.id.shuttle_fabEnd:
                 toggleFab();
